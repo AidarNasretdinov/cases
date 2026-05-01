@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://levelupai.cz">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://levelupai.cz">
+<meta property="og:title" content="Případové studie — Level Up AI">
+<meta property="og:description" content="AI automatizace pro malé firmy — reálné případové studie s měřitelnými výsledky">
+<meta property="og:image" content="https://levelupai.cz/og-image.png">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Případové studie — Level Up AI">
+<meta name="twitter:description" content="AI automatizace pro malé firmy — reálné případové studie">
+<meta name="twitter:image" content="https://levelupai.cz/og-image.png">
 <meta name="description" content="AI automatizace pro malé firmy — reálné případové studie s měřitelnými výsledky">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title id="page-title">Případové studie — Level Up</title>
@@ -616,7 +630,7 @@
       <div class="stat-label" data-i18n="stat_speed">zrychlení procesů</div>
     </div>
     <div class="stat">
-      <div class="stat-value">8ч+</div>
+      <div class="stat-value" data-i18n="stat_commission_val">8ч+</div>
       <div class="stat-label" data-i18n="stat_commission">průměrná úspora měsíčně</div>
     </div>
   </div>
@@ -700,23 +714,23 @@
             <div class="section-label" data-i18n="label_look">Jak to vypadá</div>
             <div class="screenshots">
               <div class="screenshot-item">
-                <img src="images/sc_order_page.png" alt="Страница заказа">
+                <img src="images/sc_order_page.png" loading="lazy" alt="Страница заказа">
                 <div class="screenshot-caption" data-i18n="sc_order_page">Stránka objednávek</div>
               </div>
               <div class="screenshot-item">
-                <img src="images/sc_builder.png" alt="Конструктор">
+                <img src="images/sc_builder.png" loading="lazy" alt="Конструктор">
                 <div class="screenshot-caption" data-i18n="sc_builder">Konfigurátor trdelníku</div>
               </div>
               <div class="screenshot-item">
-                <img src="images/sc_cart.png" alt="Корзина">
+                <img src="images/sc_cart.png" loading="lazy" alt="Корзина">
                 <div class="screenshot-caption" data-i18n="sc_cart">Košík a objednávka</div>
               </div>
               <div class="screenshot-item">
-                <img src="images/sc_kitchen.png" alt="Telegram кухня">
+                <img src="images/sc_kitchen.png" loading="lazy" alt="Telegram кухня">
                 <div class="screenshot-caption" data-i18n="sc_kitchen">Notifikace pro kuchyni</div>
               </div>
               <div class="screenshot-item">
-                <img src="images/sc_admin.png" alt="Админ-панель">
+                <img src="images/sc_admin.png" loading="lazy" alt="Админ-панель">
                 <div class="screenshot-caption" data-i18n="sc_admin">Admin panel</div>
               </div>
             </div>
@@ -781,11 +795,11 @@
             <div class="section-label" data-i18n="label_look">Jak to vypadá</div>
             <div class="screenshots">
               <div class="screenshot-item">
-                <img src="images/sc_calc.png" alt="Калькулятор зарплаты">
+                <img src="images/sc_calc.png" loading="lazy" alt="Калькулятор зарплаты">
                 <div class="screenshot-caption" data-i18n="sc_calc">Kalkulačka mzdy v Evotoru</div>
               </div>
               <div class="screenshot-item" style="width:200px">
-                <img src="images/sc_summary.png" alt="Сводная таблица" style="height:200px;object-fit:cover;object-position:top">
+                <img src="images/sc_summary.png" loading="lazy" alt="Сводная таблица" style="height:200px;object-fit:cover;object-position:top">
                 <div class="screenshot-caption" data-i18n="sc_summary">Přehled zaměstnanců</div>
               </div>
             </div>
@@ -948,6 +962,7 @@ document.addEventListener('DOMContentLoaded', function() {
       stat_cases: 'кейса завершено',
       stat_speed: 'ускорение процессов',
       stat_commission: 'в среднем сэкономлено в месяц',
+      stat_commission_val: '8ч+',
       filter_all: 'Все', filter_cafe: 'Кафе / HoReCa', filter_hr: 'HR / Зарплаты', filter_ecom: 'E-commerce', filter_ocr: 'Строительство',
       cta_badge: '🎯 Без обязательств',
       cta_title: 'Покажу где ты<br><span>теряешь деньги</span><br>прямо сейчас',
@@ -1020,7 +1035,8 @@ document.addEventListener('DOMContentLoaded', function() {
       header_sub: 'Ukažte mi svůj byznys — najdeme kde ztrácíte peníze na manuální práci. Každý případ níže — skutečný klient, skutečná čísla.',
       stat_cases: 'dokončené projekty',
       stat_speed: 'zrychlení procesů',
-      stat_commission: 'průměrná úspora měsíčně',
+      stat_commission: 'průměrná úspora h/měsíc',
+      stat_commission_val: '8h+',
       filter_all: 'Vše', filter_cafe: 'Kavárna / HoReCa', filter_hr: 'HR / Mzdy', filter_ecom: 'E-commerce', filter_ocr: 'Stavebnictví',
       cta_badge: '🎯 Bez závazků',
       cta_title: 'Ukážu kde<br><span>ztrácíte peníze</span><br>právě teď',
@@ -1093,7 +1109,8 @@ document.addEventListener('DOMContentLoaded', function() {
       header_sub: 'Show me your business — we\'ll find where you\'re losing money on manual work. Every case below is a real client, real numbers.',
       stat_cases: 'completed cases',
       stat_speed: 'process speedup',
-      stat_commission: 'avg. hours saved/month',
+      stat_commission: 'avg. h saved/month',
+      stat_commission_val: '8h+',
       filter_all: 'All', filter_cafe: 'Café / HoReCa', filter_hr: 'HR / Payroll', filter_ecom: 'E-commerce', filter_ocr: 'Construction',
       cta_badge: '🎯 No commitment',
       cta_title: 'I\'ll show you where<br><span>you\'re losing money</span><br>right now',
