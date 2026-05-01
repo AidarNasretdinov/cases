@@ -1,1 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="AI автоматизация для малого бизнеса — реальные кейсы с измеримыми результатами">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title id="page-title">Кейсы — Level Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --bg:       #ffffff;
+    --surface:  #f7f8fc;
+    --surface2: #eef0f8;
+    --border:   #dde0f0;
+    --blue:     #4156C3;
+    --yellow:   #a07800;
+    --indigo:   #4156C3;
+    --text:     #111827;
+    --muted:    #9098b8;
+    --muted2:   #5a6080;
+  }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Onest', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(65,86,195,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(65,86,195,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow-blob {
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(65,86,195,0.08) 0%, transparent 70%);
+    top: -150px; right: -150px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* NAV */
+  nav {
+    padding: 20px 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo { display: flex; align-items: center; gap: 8px; }
+
+  .logo-img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+  .logo-img--footer {
+    height: 22px;
+  }
+
+  .nav-tag {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 5px 12px; border-radius: 20px;
+  }
+
+  /* HEADER */
+  header { padding: 36px 0 28px; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(26px, 7.5vw, 44px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--blue);
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--blue);
+    opacity: 0.4;
+    border-radius: 2px;
+    animation: grow 0.8s 0.5s ease both;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  @keyframes grow { to { transform: scaleX(1); } }
+
+  .header-sub {
+    margin-top: 14px;
+    font-size: 14px; color: var(--muted2);
+    line-height: 1.65; max-width: 480px;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    margin: 24px 0 28px;
+  }
+
+  .stat { background: var(--surface); padding: 16px 10px; text-align: center; }
+
+  .stat-value {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--blue); letter-spacing: -0.04em; line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px; color: var(--muted);
+    margin-top: 5px; line-height: 1.3;
+  }
+
+  /* FILTERS */
+  .filters {
+    display: flex; gap: 8px; flex-wrap: nowrap;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 2px;
+    margin-bottom: 16px;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted2);
+    font-family: 'Onest', sans-serif;
+    font-size: 12px; font-weight: 500;
+    padding: 7px 16px; border-radius: 20px;
+    cursor: pointer; transition: all 0.2s;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .filter-btn:active { transform: scale(0.95); }
+
+  .filter-btn.active {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: #ffffff; font-weight: 600;
+  }
+
+  /* CASES */
+  .cases-list { display: flex; flex-direction: column; gap: 10px; }
+
+  /* CARD */
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    -webkit-tap-highlight-color: transparent;
+    animation: fadeUp 0.5s ease both;
+    will-change: transform, opacity;
+  }
+
+  .case-card:nth-child(1) { animation-delay: 0.05s; }
+  .case-card:nth-child(2) { animation-delay: 0.12s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .case-card:active { opacity: 0.9; }
+  .case-card.open { border-color: var(--indigo); box-shadow: 0 0 0 2px rgba(65,86,195,0.15); }
+
+  .card-top { padding: 18px 18px 16px; }
+
+  .card-head {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 5px;
+    border: 1px solid var(--border);
+    color: var(--muted2); background: var(--surface2);
+  }
+
+  .tag.primary {
+    border-color: rgba(65,86,195,0.3);
+    color: var(--indigo);
+    background: rgba(65,86,195,0.07);
+  }
+
+  .toggle-btn {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted2); transition: all 0.3s;
+  }
+
+  .case-card.open .toggle-btn {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: #ffffff;
+    transform: rotate(45deg);
+  }
+
+  .toggle-btn svg { width: 12px; height: 12px; }
+
+  .card-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(14px, 4vw, 17px);
+    font-weight: 700; line-height: 1.25;
+    letter-spacing: -0.02em; margin-bottom: 8px;
+  }
+
+  .card-problem {
+    font-size: 13px; color: var(--muted2); line-height: 1.6;
+  }
+
+  /* METRICS */
+  .card-metrics {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border-top: 1px solid var(--border);
+  }
+
+  .metric {
+    background: var(--surface2);
+    padding: 14px 16px; position: relative; overflow: hidden;
+  }
+
+  .metric::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--blue);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.5s ease;
+  }
+
+  .case-card.open .metric::after { transform: scaleX(1); }
+
+  .metric-value {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 26px; font-weight: 900;
+    color: var(--blue); letter-spacing: -0.04em; line-height: 1;
+  }
+
+  .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.3; }
+
+  /* EXPAND */
+  .case-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .case-body.open { max-height: 1200px; }
+
+  .case-body-inner {
+    padding: 18px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .section-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--indigo); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 8px; }
+
+  .step {
+    display: flex; gap: 12px;
+    background: var(--surface2);
+    border-radius: 10px; padding: 12px 14px;
+    border: 1px solid var(--border);
+  }
+
+  .step-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px; font-weight: 900;
+    color: var(--blue); min-width: 16px; padding-top: 2px;
+  }
+
+  .step-text { font-size: 13px; color: var(--muted2); line-height: 1.55; }
+  .step-text strong { color: var(--text); font-weight: 600; }
+
+  .result-block {
+    background: rgba(65,86,195,0.05);
+    border: 1px solid rgba(65,86,195,0.2);
+    border-radius: 10px; padding: 14px 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .result-icon { font-size: 18px; flex-shrink: 0; }
+
+  .result-text { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+  .result-text strong { color: var(--indigo); font-weight: 600; }
+
+  .insight {
+    background: rgba(65,86,195,0.04);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0; padding: 12px 14px;
+  }
+
+  .insight p { font-size: 12px; color: var(--muted2); line-height: 1.6; }
+  .insight p strong { color: var(--blue); font-weight: 600; }
+
+  /* CTA */
+  .cta-section {
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 26px 20px;
+    position: relative; overflow: hidden;
+    animation: fadeUp 0.5s 0.25s ease both;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(65,86,195,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--blue);
+    background: rgba(65,86,195,0.08);
+    border: 1px solid rgba(65,86,195,0.2);
+    padding: 4px 10px; border-radius: 20px; margin-bottom: 14px;
+  }
+
+  .cta-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(22px, 6vw, 32px);
+    font-weight: 900; line-height: 1.15;
+    letter-spacing: -0.03em; margin-bottom: 10px;
+  }
+
+  .cta-title span { color: var(--indigo); }
+
+  .cta-sub {
+    font-size: 13px; color: var(--muted2);
+    line-height: 1.65; margin-bottom: 22px;
+  }
+
+
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 17px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .cta-btn--tg {
+    background: var(--indigo);
+    color: #ffffff;
+  }
+
+  .cta-btn--wa {
+    background: #25D366;
+    color: #ffffff;
+  }
+
+  .cta-btn:active { transform: scale(0.97); }
+
+  .cta-btn svg { width: 16px; height: 16px; }
+
+  .cta-note {
+    text-align: center; font-size: 11px;
+    color: var(--muted); margin-top: 10px;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 28px; padding: 20px 0 40px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; gap: 8px; text-align: center;
+  }
+
+  .footer-logo { display: flex; align-items: center; gap: 8px; }
+
+  .footer-logo
+
+  .footer-logo
+
+  .footer-note { font-size: 11px; color: var(--muted); }
+
+  /* COMING SOON */
+  .coming-soon {
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 16px; padding: 18px;
+    display: flex; align-items: center; gap: 14px;
+    opacity: 0.45;
+  }
+
+  .coming-icon {
+    width: 42px; height: 42px;
+    background: var(--surface2); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+
+  .coming-text strong {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--text); display: block; margin-bottom: 3px;
+  }
+
+  .coming-text span { font-size: 12px; color: var(--muted); }
+
+  .hidden { display: none !important; }
+
+  /* SCREENSHOTS GALLERY */
+  .screenshots {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    margin-top: 16px;
+  }
+  .screenshots::-webkit-scrollbar { display: none; }
+
+  .screenshot-item {
+    flex-shrink: 0;
+    width: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .screenshot-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  .screenshot-caption {
+    font-size: 10px;
+    color: var(--muted2);
+    padding: 6px 8px;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+
+  /* LANG SWITCHER */
+  .lang-switcher {
+    display: flex;
+    gap: 2px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lang-btn.active {
+    background: var(--indigo);
+    color: #fff;
+  }
+  .lang-btn:hover:not(.active) { color: var(--text); }
+
+
+  @media (min-width: 640px) {
+    .card-top { padding: 24px 24px 20px; }
+    .case-body-inner { padding: 24px; }
+    .stats-row { gap: 0; }
+    .stat-value { font-size: 26px; }
+    .cta-section { padding: 36px 32px; }
+    .cta-buttons { flex-direction: row; }
+    .cta-btn { width: auto; flex: 1; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="glow-blob"></div>
+
+<div class="wrapper" role="main">
+
+  <nav>
+    <div class="logo">
+      <img src="logo.png" class="logo-img" alt="Level Up">
+    </div>
+    <div class="lang-switcher">
+      <button type="button" class="lang-btn active" data-lang="ru" aria-label="Русский">RU</button>
+      <button type="button" class="lang-btn" data-lang="cs" aria-label="Čeština">CZ</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+    </div>
+  </nav>
+
+  <header>
+    <h1 data-i18n="h1">Твои конкуренты уже<br>не делают это <em>вручную</em></h1>
+    <p class="header-sub" data-i18n="header_sub">Покажи мне свой бизнес — найдём где ты теряешь деньги на ручном труде. Каждый кейс ниже — реальный клиент, реальные цифры.</p>
+  </header>
+
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label" data-i18n="stat_cases">кейса завершено</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">×72</div>
+      <div class="stat-label" data-i18n="stat_speed">ускорение процессов</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">8ч+</div>
+      <div class="stat-label" data-i18n="stat_commission">экономии в месяц в среднем</div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button type="button" class="filter-btn active" data-filter="all" data-i18n="filter_all">Все</button>
+    <button type="button" class="filter-btn" data-filter="cafe" data-i18n="filter_cafe">Кафе / HoReCa</button>
+    <button type="button" class="filter-btn" data-filter="hr" data-i18n="filter_hr">HR / Зарплаты</button>
+    <button type="button" class="filter-btn" data-filter="ecom" data-i18n="filter_ecom">E-commerce</button>
+    <button type="button" class="filter-btn" data-filter="ocr" data-i18n="filter_ocr">Строительство</button>
+  </div>
+
+  <div class="cases-list" id="cases-list">
+
+    <div class="case-card" data-tags="cafe">
+      <div class="card-top">
+        <div class="card-head">
+          <div class="tags">
+            <span class="tag primary" data-i18n="tag_cafe">Кафе</span>
+            <span class="tag" data-i18n="tag_city1">Прага, 2026</span>
+            <span class="tag">Telegram Bot</span>
+            <span class="tag" data-i18n="tag_orders">Заказы</span>
+            <span class="tag">Railway</span>
+          </div>
+          <div class="toggle-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </div>
+        <div class="card-title" data-i18n="c1_title">Своя система заказов — 30% комиссии агрегаторам → 0</div>
+        <div class="card-problem" data-i18n="c1_prob">При обороте 200к CZK/мес кафе отдавало 60 000 CZK ежемесячно агрегаторам. Плюс — потеря контроля над клиентской базой.</div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric">
+          <div class="metric-value">30%</div>
+          <div class="metric-label" data-i18n="c1_m1">комиссия ликвидирована</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">99.9%</div>
+          <div class="metric-label" data-i18n="c1_m2">uptime на Railway</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-body-inner">
+          <div>
+            <div class="section-label" data-i18n="label_done">Что сделано</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-text" data-i18n="c1_s1"><strong>Страница заказа</strong> — полностью под бренд кафе, адаптирована под меню, без посредников</div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-text" data-i18n="c1_s2"><strong>Админ-панель для кухни</strong> — все заказы в одном месте, статусы в реальном времени, история</div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-text" data-i18n="c1_s3"><strong>Telegram-бот</strong> — клиент автоматически получает уведомления: принят → готовится → выдан</div>
+              </div>
+              <div class="step">
+                <div class="step-num">04</div>
+                <div class="step-text" data-i18n="c1_s4"><strong>Деплой на Railway</strong> — приложение развёрнуто на отдельном сервере с гарантией <strong>99.9% uptime</strong>. Работает круглосуточно без ручного вмешательства</div>
+              </div>
+              <div class="step">
+                <div class="step-num">05</div>
+                <div class="step-text" data-i18n="c1_s5"><strong>Управление приёмом заказов</strong> — администратор открывает и закрывает приём одной кнопкой в админ-панели. Полный контроль: кухня не перегружена, клиенты видят актуальный статус</div>
+              </div>
+              <div class="step">
+                <div class="step-num">06</div>
+                <div class="step-text" data-i18n="c1_s6"><strong>Защита от злоупотреблений</strong> — система не принимает более 20 позиций в одном заказе и блокирует аномальную активность с одного IP. Защита от накруток и случайных ошибок</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-block">
+            <div class="result-icon">⚡</div>
+            <div class="result-text" data-i18n="c1_res">Кафе получило <strong>полный контроль над заказами</strong>: открытие/закрытие приёма, защита от злоупотреблений, 99.9% uptime. Все деньги остаются в бизнесе.</div>
+          </div>
+          <div class="insight">
+            <p data-i18n="c1_ins"><strong>Инсайт:</strong> агрегаторы забирают не только комиссию — они забирают клиентскую базу. Своя система строит повторные продажи, которые со временем только дорожают.</p>
+          </div>
+          <div>
+            <div class="section-label" data-i18n="label_look">Как это выглядит</div>
+            <div class="screenshots">
+              <div class="screenshot-item">
+                <img src="images/sc_order_page.png" alt="Страница заказа">
+                <div class="screenshot-caption" data-i18n="sc_order_page">Страница заказа</div>
+              </div>
+              <div class="screenshot-item">
+                <img src="images/sc_builder.png" alt="Конструктор">
+                <div class="screenshot-caption" data-i18n="sc_builder">Конструктор трдельника</div>
+              </div>
+              <div class="screenshot-item">
+                <img src="images/sc_cart.png" alt="Корзина">
+                <div class="screenshot-caption" data-i18n="sc_cart">Корзина и оформление</div>
+              </div>
+              <div class="screenshot-item">
+                <img src="images/sc_kitchen.png" alt="Telegram кухня">
+                <div class="screenshot-caption" data-i18n="sc_kitchen">Уведомления на кухню</div>
+              </div>
+              <div class="screenshot-item">
+                <img src="images/sc_admin.png" alt="Админ-панель">
+                <div class="screenshot-caption" data-i18n="sc_admin">Админ-панель</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="cafe hr">
+      <div class="card-top">
+        <div class="card-head">
+          <div class="tags">
+            <span class="tag primary" data-i18n="tag_cafe">Кафе</span>
+            <span class="tag" data-i18n="tag_city1">Прага, 2026</span>
+            <span class="tag" data-i18n="tag_hr">HR / Зарплаты</span>
+            <span class="tag" data-i18n="tag_evotor">Эвотор</span>
+          </div>
+          <div class="toggle-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </div>
+        <div class="card-title" data-i18n="c2_title">Расчёт зарплат из Эвотор — 6 часов ручной работы → 5 минут</div>
+        <div class="card-problem" data-i18n="c2_prob">Гибкий график + процент от выручки = ручной пересчёт каждый месяц. Часы потраченного времени и постоянный риск ошибок.</div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric">
+          <div class="metric-value">×72</div>
+          <div class="metric-label" data-i18n="c2_m1">быстрее расчёт</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">0</div>
+          <div class="metric-label" data-i18n="c2_m2">ошибок в расчётах</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-body-inner">
+          <div>
+            <div class="section-label" data-i18n="label_done">Что сделано</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-text" data-i18n="c2_s1"><strong>Расширение для Эвотор</strong> — считывает данные по сменам и выручке каждого сотрудника в реальном времени</div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-text" data-i18n="c2_s2"><strong>Автоматический расчёт</strong> — ставка + % от личной выручки за смену, формула гибко настраивается</div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-text" data-i18n="c2_s3"><strong>Экспорт в таблицу</strong> — сводные данные за любой период, история по сотруднику, срезы по дате</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-block">
+            <div class="result-icon">🎯</div>
+            <div class="result-text" data-i18n="c2_res">Расчёт зарплат занимает <strong>5 минут вместо 6 часов</strong>. Данные актуальны в любой момент — не надо ждать конца месяца.</div>
+          </div>
+          <div class="insight">
+            <p data-i18n="c2_ins"><strong>Инсайт:</strong> 6 часов бухгалтера — это ~3 000 CZK прямых затрат плюс риск ошибок, которые ведут к конфликтам с сотрудниками. Окупается за первый же месяц.</p>
+          </div>
+          <div>
+            <div class="section-label" data-i18n="label_look">Как это выглядит</div>
+            <div class="screenshots">
+              <div class="screenshot-item">
+                <img src="images/sc_calc.png" alt="Калькулятор зарплаты">
+                <div class="screenshot-caption" data-i18n="sc_calc">Калькулятор в Эвотор</div>
+              </div>
+              <div class="screenshot-item" style="width:200px">
+                <img src="images/sc_summary.png" alt="Сводная таблица" style="height:200px;object-fit:cover;object-position:top">
+                <div class="screenshot-caption" data-i18n="sc_summary">Сводная по работникам</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="case-card" data-tags="ocr finance">
+      <div class="card-top">
+        <div class="card-head">
+          <div class="tags">
+            <span class="tag primary" data-i18n="tag_construction">Строительство</span>
+            <span class="tag">OCR / AI</span>
+            <span class="tag">Cashflow</span>
+          </div>
+          <div class="toggle-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </div>
+        <div class="card-title" data-i18n="c3_title">Klunn Group: OCR-сканирование чеков и фактур → автоматический cashflow</div>
+        <div class="card-problem" data-i18n="c3_prob">100 чеков в неделю собирали в папку и отдавали бухгалтеру вручную. Часть терялась. Сверка с банком занимала 2 часа — и всё равно была неточной.</div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric">
+          <div class="metric-value">400</div>
+          <div class="metric-label" data-i18n="c3_m1">чеков/мес обрабатывается автоматически</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">0</div>
+          <div class="metric-label" data-i18n="c3_m2">потерь документов</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-body-inner">
+          <div>
+            <div class="section-label" data-i18n="label_done">Что сделано</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-text" data-i18n="c3_s1"><strong>Сбор через телефон</strong> — прораб фотографирует чек или фактуру и отправляет в Telegram-бот. Никаких папок и физических носителей</div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-text" data-i18n="c3_s2"><strong>OCR + AI-разбор</strong> — OpenAI Vision распознаёт сумму, дату, контрагента и категорию расхода. Python-скрипт валидирует и нормализует данные</div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-text" data-i18n="c3_s3"><strong>Автозапись в cashflow</strong> — Make передаёт структурированные данные в таблицу. Расход появляется в cashflow мгновенно, без участия бухгалтера</div>
+              </div>
+              <div class="step">
+                <div class="step-num">04</div>
+                <div class="step-text" data-i18n="c3_s4"><strong>Сверка с банком</strong> — таблица содержит все расходы с датами и суммами, сверка с выпиской занимает минуты вместо 2 часов</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-block">
+            <div class="result-icon">🎯</div>
+            <div class="result-text" data-i18n="c3_res">Бухгалтер получает <strong>готовый cashflow в реальном времени</strong> — без папок, без потерь, без ручного ввода. 400 документов в месяц обрабатываются автоматически.</div>
+          </div>
+          <div class="insight">
+            <p data-i18n="c3_ins"><strong>Инсайт:</strong> потеря даже 5% чеков из 400 — это слепые пятна в финансах на десятки тысяч крон. Автоматизация убирает человеческий фактор полностью и даёт собственнику актуальную картину каждый день.</p>
+          </div>
+          <div>
+            <div class="section-label" data-i18n="label_stack">Стек</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">🔧</div>
+                <div class="step-text" data-i18n="c3_stack"><strong>Make</strong> (оркестрация) · <strong>OpenAI Vision</strong> (OCR + разбор) · <strong>Python</strong> (валидация данных) · <strong>Telegram Bot</strong> (сбор фото) · <strong>Google Sheets</strong> (cashflow)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coming-soon" data-tags="ecom">
+      <div class="coming-icon">⚙️</div>
+      <div class="coming-text">
+        <strong data-i18n="coming_title">Следующий кейс в работе</strong>
+        <span data-i18n="coming_sub">E-commerce · Автоматизация обработки заказов — скоро</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta-section">
+    <div class="cta-badge" data-i18n="cta_badge">🎯 Без обязательств</div>
+    <div class="cta-title" data-i18n="cta_title">Покажу где ты<br><span>теряешь деньги</span><br>прямо сейчас</div>
+    <p class="cta-sub" data-i18n="cta_sub">Разбор за 30 минут — без продажи, без обязательств. Уйдёшь с конкретным списком что можно автоматизировать у тебя.</p>
+    <div class="cta-buttons">
+      <a href="https://t.me/aidar_nasretdinov" class="cta-btn cta-btn--tg" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+        <span data-i18n="cta_btn">Написать в Telegram</span>
+      </a>
+      <a href="https://wa.me/420776627409" class="cta-btn cta-btn--wa" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span data-i18n="cta_btn_wa">Написать в WhatsApp</span>
+      </a>
+    </div>
+    <p class="cta-note" data-i18n="cta_note">Обычно отвечаю в течение часа</p>
+  </div>
+
+  <footer>
+    <div class="footer-logo">
+      <img src="logo.png" class="logo-img" alt="Level Up">
+    </div>
+    <div class="footer-note" data-i18n="footer_note">AI Автоматизация для малого бизнеса · 2026</div>
+  </footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ── CASE TOGGLE ──
+  document.querySelectorAll('.case-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var body = card.querySelector('.case-body');
+      var isOpen = card.classList.contains('open');
+      document.querySelectorAll('.case-card').forEach(function(c) {
+        c.classList.remove('open');
+        var b = c.querySelector('.case-body');
+        if (b) b.classList.remove('open');
+      });
+      if (!isOpen) {
+        card.classList.add('open');
+        body.classList.add('open');
+        setTimeout(function() {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 120);
+      }
+    });
+  });
+
+  // ── FILTERS ──
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.dataset.filter;
+      document.querySelectorAll('[data-tags]').forEach(function(el) {
+        el.classList.toggle('hidden', f !== 'all' && !el.dataset.tags.includes(f));
+      });
+    });
+  });
+
+  // ── I18N ──
+  var T = {
+    ru: {
+      nav_tag: 'Кейсы',
+      eyebrow: 'HoReCa · Стройка · Ритейл',
+      h1: 'Твои конкуренты уже<br>не делают это <em>вручную</em>',
+      header_sub: 'Покажи мне свой бизнес — найдём где ты теряешь деньги на ручном труде. Каждый кейс ниже — реальный клиент, реальные цифры.',
+      stat_cases: 'кейса завершено',
+      stat_speed: 'ускорение процессов',
+      stat_commission: 'в среднем сэкономлено в месяц',
+      filter_all: 'Все', filter_cafe: 'Кафе / HoReCa', filter_hr: 'HR / Зарплаты', filter_ecom: 'E-commerce', filter_ocr: 'Строительство',
+      cta_badge: '🎯 Без обязательств',
+      cta_title: 'Покажу где ты<br><span>теряешь деньги</span><br>прямо сейчас',
+      cta_sub: 'Разбор за 60 минут — без продажи, без обязательств. Уйдёшь с конкретным списком что можно автоматизировать у тебя.',
+      cta_btn: 'Написать в Telegram',
+      cta_note: 'Обычно отвечаю в течение часа',
+      footer_note: 'AI Автоматизация для малого бизнеса · 2026',
+      coming_title: 'Следующий кейс в работе',
+      coming_sub: 'E-commerce · Автоматизация обработки заказов — скоро',
+      label_done: 'Что сделано', label_look: 'Как это выглядит', label_stack: 'Стек',
+      c1_title: 'Своя система заказов — 30% комиссии агрегаторам → 0',
+      c1_prob: 'При обороте 200к CZK/мес кафе отдавало 60 000 CZK ежемесячно агрегаторам. Плюс — потеря контроля над клиентской базой.',
+      c1_m1: 'комиссия ликвидирована', c1_m2: 'uptime на Railway',
+      c1_res: 'Кафе получило <strong>полный контроль над заказами</strong>: открытие/закрытие приёма, защита от злоупотреблений, 99.9% uptime. Все деньги остаются в бизнесе.',
+      c1_ins: '<strong>Инсайт:</strong> агрегаторы забирают не только комиссию — они забирают клиентскую базу. Своя система строит повторные продажи, которые со временем только дорожают.',
+      c1_s1: '<strong>Страница заказа</strong> — полностью под бренд кафе, адаптирована под меню, без посредников',
+      c1_s2: '<strong>Админ-панель для кухни</strong> — все заказы в одном месте, статусы в реальном времени, история',
+      c1_s3: '<strong>Telegram-бот</strong> — клиент автоматически получает уведомления: принят → готовится → выдан',
+      c1_s4: '<strong>Деплой на Railway</strong> — приложение развёрнуто на отдельном сервере с гарантией <strong>99.9% uptime</strong>. Работает круглосуточно без ручного вмешательства',
+      c1_s5: '<strong>Управление приёмом заказов</strong> — администратор открывает и закрывает приём одной кнопкой в админ-панели. Полный контроль: кухня не перегружена, клиенты видят актуальный статус',
+      c1_s6: '<strong>Защита от злоупотреблений</strong> — система не принимает более 20 позиций в одном заказе и блокирует аномальную активность с одного IP. Защита от накруток и случайных ошибок',
+      c2_title: 'Расчёт зарплат из Эвотор — 6 часов ручной работы → 5 минут',
+      c2_prob: 'Гибкий график + процент от выручки = ручной пересчёт каждый месяц. Часы потраченного времени и постоянный риск ошибок.',
+      c2_m1: 'быстрее расчёт', c2_m2: 'ошибок в расчётах',
+      c2_res: 'Расчёт зарплат занимает <strong>5 минут вместо 6 часов</strong>. Данные актуальны в любой момент — не надо ждать конца месяца.',
+      c2_ins: '<strong>Инсайт:</strong> 6 часов бухгалтера — это ~3 000 CZK прямых затрат плюс риск ошибок, которые ведут к конфликтам с сотрудниками. Окупается за первый же месяц.',
+      c2_s1: '<strong>Расширение для Эвотор</strong> — считывает данные по сменам и выручке каждого сотрудника в реальном времени',
+      c2_s2: '<strong>Автоматический расчёт</strong> — ставка + % от личной выручки за смену, формула гибко настраивается',
+      c2_s3: '<strong>Экспорт в таблицу</strong> — сводные данные за любой период, история по сотруднику, срезы по дате',
+      c3_title: 'Klunn Group: OCR-сканирование чеков и фактур → автоматический cashflow',
+      c3_prob: '100 чеков в неделю собирали в папку и отдавали бухгалтеру вручную. Часть терялась. Сверка с банком занимала 2 часа — и всё равно была неточной.',
+      c3_m1: 'чеков/мес обрабатывается автоматически', c3_m2: 'потерь документов',
+      c3_res: 'Бухгалтер получает <strong>готовый cashflow в реальном времени</strong> — без папок, без потерь, без ручного ввода. 400 документов в месяц обрабатываются автоматически.',
+      c3_ins: '<strong>Инсайт:</strong> потеря даже 5% чеков из 400 — это слепые пятна в финансах на десятки тысяч крон. Автоматизация убирает человеческий фактор полностью и даёт собственнику актуальную картину каждый день.',
+      c3_s1: '<strong>Сбор через телефон</strong> — прораб фотографирует чек или фактуру и отправляет в Telegram-бот. Никаких папок и физических носителей',
+      c3_s2: '<strong>OCR + AI-разбор</strong> — OpenAI Vision распознаёт сумму, дату, контрагента и категорию расхода. Python-скрипт валидирует и нормализует данные',
+      c3_s3: '<strong>Автозапись в cashflow</strong> — Make передаёт структурированные данные в таблицу. Расход появляется в cashflow мгновенно, без участия бухгалтера',
+      c3_s4: '<strong>Сверка с банком</strong> — таблица содержит все расходы с датами и суммами, сверка с выпиской занимает минуты вместо 2 часов',
+      sc_order_page: 'Страница заказа',
+      sc_builder: 'Конструктор трдельника',
+      sc_cart: 'Корзина и оформление',
+      sc_kitchen: 'Уведомления на кухню',
+      sc_admin: 'Админ-панель',
+      sc_calc: 'Калькулятор в Эвотор',
+      sc_summary: 'Сводная по работникам',
+      tag_cafe: 'Кафе',
+      tag_orders: 'Заказы',
+      tag_hr: 'HR / Зарплаты',
+      tag_construction: 'Строительство',
+      c1_m2: 'гарантия Railway',
+      c2_m2: 'ошибок в расчётах',
+      c3_m2: 'потерь документов',
+      filter_cafe: 'Кафе / HoReCa',
+      filter_ecom: 'E-commerce',
+      filter_hr: 'HR / Зарплаты',
+      filter_ocr: 'Строительство',
+      label_look: 'Как это выглядит',
+      label_stack: 'Стек',
+      tag_evotor: 'Эвотор',
+      page_title: 'Кейсы — Level Up',
+      cta_btn_wa: 'Написать в WhatsApp',
+      tag_city1: 'Прага, 2026',
+      c3_stack: '<strong>Make</strong> (оркестрация) · <strong>OpenAI Vision</strong> (OCR + разбор) · <strong>Python</strong> (валидация данных) · <strong>Telegram Bot</strong> (сбор фото) · <strong>Google Sheets</strong> (cashflow)',
+    },
+    cs: {
+      nav_tag: 'Případové studie',
+      eyebrow: 'HoReCa · Stavebnictví · Retail',
+      h1: 'Vaši konkurenti už<br>to nedělají <em>ručně</em>',
+      header_sub: 'Ukažte mi svůj byznys — najdeme kde ztrácíte peníze na manuální práci. Každý případ níže — skutečný klient, skutečná čísla.',
+      stat_cases: 'dokončené projekty',
+      stat_speed: 'zrychlení procesů',
+      stat_commission: 'průměrná úspora měsíčně',
+      filter_all: 'Vše', filter_cafe: 'Kavárna / HoReCa', filter_hr: 'HR / Mzdy', filter_ecom: 'E-commerce', filter_ocr: 'Stavebnictví',
+      cta_badge: '🎯 Bez závazků',
+      cta_title: 'Ukážu kde<br><span>ztrácíte peníze</span><br>právě teď',
+      cta_sub: 'Konzultace 60 minut — bez prodeje, bez závazků. Odejdete s konkrétním seznamem co lze u vás automatizovat.',
+      cta_btn: 'Napsat na Telegram',
+      cta_note: 'Obvykle odpovídám do hodiny',
+      footer_note: 'AI Automatizace pro malé firmy · 2026',
+      coming_title: 'Další případ v přípravě',
+      coming_sub: 'E-commerce · Automatizace zpracování objednávek — brzy',
+      label_done: 'Co bylo uděláno', label_look: 'Jak to vypadá', label_stack: 'Stack',
+      c1_title: 'Vlastní systém objednávek — 30% provize agregátorům → 0',
+      c1_prob: 'Při obratu 200k CZK/měs restaurace platila 60 000 CZK měsíčně agregátorům. Plus — ztráta kontroly nad zákaznickou základnou.',
+      c1_m1: 'provize eliminována', c1_m2: 'uptime na Railway',
+      c1_res: 'Restaurace získala <strong>plnou kontrolu nad objednávkami</strong>: otevírání/zavírání příjmu, ochrana před zneužitím, 99.9% uptime. Všechny peníze zůstávají v podniku.',
+      c1_ins: '<strong>Insight:</strong> agregátoři berou nejen provizi — berou zákaznickou základnu. Vlastní systém buduje opakované objednávky, které se časem zhodnocují.',
+      c1_s1: '<strong>Stránka objednávek</strong> — plně pod brand restaurace, přizpůsobena menu, bez zprostředkovatelů',
+      c1_s2: '<strong>Admin panel pro kuchyni</strong> — všechny objednávky na jednom místě, stavy v reálném čase, historie',
+      c1_s3: '<strong>Telegram bot</strong> — zákazník automaticky dostává notifikace: přijato → připravuje se → vydáno',
+      c1_s4: '<strong>Nasazení na Railway</strong> — aplikace běží na dedikovaném serveru se zárukou <strong>99.9% uptime</strong>. Funguje nepřetržitě bez manuálních zásahů',
+      c1_s5: '<strong>Správa příjmu objednávek</strong> — administrátor otevírá a zavírá příjem jedním tlačítkem. Plná kontrola: kuchyně není přetížena, zákazníci vidí aktuální stav',
+      c1_s6: '<strong>Ochrana před zneužitím</strong> — systém nepřijme více než 20 položek v jedné objednávce a blokuje abnormální aktivitu z jedné IP adresy',
+      c2_title: 'Výpočet mezd z Evotoru — 6 hodin manuální práce → 5 minut',
+      c2_prob: 'Flexibilní směny + procento z tržby = manuální přepočet každý měsíc. Hodiny ztraceného času a neustálé riziko chyb.',
+      c2_m1: 'rychlejší výpočet', c2_m2: 'chyb ve výpočtech',
+      c2_res: 'Výpočet mezd trvá <strong>5 minut místo 6 hodin</strong>. Data jsou aktuální kdykoliv — není třeba čekat na konec měsíce.',
+      c2_ins: '<strong>Insight:</strong> 6 hodin účetního jsou ~3 000 CZK přímých nákladů plus riziko chyb vedoucích ke konfliktům se zaměstnanci. Vrátí se za první měsíc.',
+      c2_s1: '<strong>Rozšíření pro Evotor</strong> — čte data o směnách a tržbách každého zaměstnance v reálném čase',
+      c2_s2: '<strong>Automatický výpočet</strong> — hodinová sazba + % z osobní tržby za směnu, vzorec se flexibilně nastavuje',
+      c2_s3: '<strong>Export do tabulky</strong> — souhrnná data za libovolné období, historie podle zaměstnance, řezy podle data',
+      c3_title: 'Klunn Group: OCR skenování účtenek a faktur → automatický cashflow',
+      c3_prob: '100 účtenek týdně se sbíralo do složky a předávalo účetnímu ručně. Část se ztratila. Odsouhlasení s bankou trvalo 2 hodiny — a bylo nepřesné.',
+      c3_m1: 'dokladů/měs zpracováno automaticky', c3_m2: 'ztracených dokumentů',
+      c3_res: 'Účetní dostává <strong>hotový cashflow v reálném čase</strong> — bez složek, bez ztrát, bez ručního zadávání. 400 dokumentů měsíčně zpracováno automaticky.',
+      c3_ins: '<strong>Insight:</strong> ztráta 5% účtenek ze 400 jsou slepá místa ve financích za desítky tisíc korun. Automatizace zcela eliminuje lidský faktor.',
+      c3_s1: '<strong>Sběr přes telefon</strong> — stavbyvedoucí vyfotí účtenku nebo fakturu a pošle do Telegram botu. Žádné složky ani fyzické nosiče',
+      c3_s2: '<strong>OCR + AI analýza</strong> — OpenAI Vision rozpozná částku, datum, dodavatele a kategorii výdaje. Python skript validuje a normalizuje data',
+      c3_s3: '<strong>Automatický zápis do cashflow</strong> — Make předá strukturovaná data do tabulky. Výdaj se zobrazí v cashflow okamžitě, bez účetního',
+      c3_s4: '<strong>Odsouhlasení s bankou</strong> — tabulka obsahuje všechny výdaje s daty a částkami, odsouhlasení trvá minuty místo 2 hodin',
+      sc_order_page: 'Stránka objednávek',
+      sc_builder: 'Konfigurátor trdelníku',
+      sc_cart: 'Košík a objednávka',
+      sc_kitchen: 'Notifikace pro kuchyni',
+      sc_admin: 'Admin panel',
+      sc_calc: 'Kalkulačka mezd v Evotoru',
+      sc_summary: 'Přehled zaměstnanců',
+      tag_cafe: 'Kavárna',
+      tag_orders: 'Objednávky',
+      tag_hr: 'HR / Mzdy',
+      tag_construction: 'Stavebnictví',
+      c1_m2: 'záruka Railway',
+      c2_m2: 'chyb ve výpočtech',
+      c3_m2: 'ztracených dokumentů',
+      filter_cafe: 'Kavárna / HoReCa',
+      filter_ecom: 'E-commerce',
+      filter_hr: 'HR / Mzdy',
+      filter_ocr: 'Stavebnictví',
+      label_look: 'Jak to vypadá',
+      label_stack: 'Stack',
+      tag_evotor: 'Evotor',
+      page_title: 'Případové studie — Level Up',
+      cta_btn_wa: 'Napsat na WhatsApp',
+      tag_city1: 'Praha, 2026',
+      c3_stack: '<strong>Make</strong> (orchestrace) · <strong>OpenAI Vision</strong> (OCR + analýza) · <strong>Python</strong> (validace dat) · <strong>Telegram Bot</strong> (sběr fotek) · <strong>Google Sheets</strong> (cashflow)',
+    },
+    en: {
+      nav_tag: 'Case Studies',
+      eyebrow: 'HoReCa · Construction · Retail',
+      h1: 'Your competitors<br>already stopped <em>doing this manually</em>',
+      header_sub: 'Show me your business — we\'ll find where you\'re losing money on manual work. Every case below is a real client, real numbers.',
+      stat_cases: 'completed cases',
+      stat_speed: 'process speedup',
+      stat_commission: 'avg. hours saved/month',
+      filter_all: 'All', filter_cafe: 'Café / HoReCa', filter_hr: 'HR / Payroll', filter_ecom: 'E-commerce', filter_ocr: 'Construction',
+      cta_badge: '🎯 No commitment',
+      cta_title: 'I\'ll show you where<br><span>you\'re losing money</span><br>right now',
+      cta_sub: '60-minute call — no sales pitch, no commitment. You\'ll leave with a concrete list of what can be automated in your business.',
+      cta_btn: 'Message on Telegram',
+      cta_note: 'Usually reply within an hour',
+      footer_note: 'AI Automation for Small Business · 2026',
+      coming_title: 'Next case in progress',
+      coming_sub: 'E-commerce · Order processing automation — coming soon',
+      label_done: 'What was done', label_look: 'How it looks', label_stack: 'Stack',
+      c1_title: 'Custom ordering system — 30% aggregator fee → 0',
+      c1_prob: 'With a turnover of 200k CZK/month, the café paid 60,000 CZK monthly to aggregators. Plus — losing control over their customer base.',
+      c1_m1: 'commission eliminated', c1_m2: 'uptime on Railway',
+      c1_res: 'The café got <strong>full control over orders</strong>: open/close ordering, abuse protection, 99.9% uptime. All money stays in the business.',
+      c1_ins: '<strong>Insight:</strong> aggregators don\'t just take commission — they take the customer base. A custom system builds repeat orders that grow in value over time.',
+      c1_s1: '<strong>Order page</strong> — fully branded for the café, adapted to the menu, no intermediaries',
+      c1_s2: '<strong>Kitchen admin panel</strong> — all orders in one place, real-time statuses, history',
+      c1_s3: '<strong>Telegram bot</strong> — customers automatically receive status updates: accepted → being prepared → ready',
+      c1_s4: '<strong>Deployed on Railway</strong> — app runs on a dedicated server with <strong>99.9% uptime</strong> guarantee. Runs 24/7 without manual intervention',
+      c1_s5: '<strong>Order intake management</strong> — admin opens and closes orders with one button. Full control: kitchen isn\'t overloaded, customers see live status',
+      c1_s6: '<strong>Abuse protection</strong> — system rejects orders with more than 20 items and blocks abnormal activity from a single IP',
+      c2_title: 'Evotor payroll calculator — 6 hours of manual work → 5 minutes',
+      c2_prob: 'Flexible shifts + revenue percentage = manual recalculation every month. Hours of wasted time and constant risk of errors.',
+      c2_m1: 'faster calculation', c2_m2: 'calculation errors',
+      c2_res: 'Payroll calculation takes <strong>5 minutes instead of 6 hours</strong>. Data is available at any time — no need to wait for end of month.',
+      c2_ins: '<strong>Insight:</strong> 6 hours of accountant time = ~3,000 CZK in direct costs plus the risk of errors leading to disputes with employees. Pays for itself in the first month.',
+      c2_s1: '<strong>Evotor extension</strong> — reads shift and revenue data for each employee in real time',
+      c2_s2: '<strong>Automatic calculation</strong> — hourly rate + % of personal revenue per shift, formula is flexibly configured',
+      c2_s3: '<strong>Export to spreadsheet</strong> — summary data for any period, history by employee, date filters',
+      c3_title: 'Klunn Group: OCR scanning of receipts & invoices → automated cashflow',
+      c3_prob: '100 receipts a week collected in a folder and handed to the accountant manually. Some got lost. Bank reconciliation took 2 hours — and was still inaccurate.',
+      c3_m1: 'receipts/month auto-processed', c3_m2: 'lost documents',
+      c3_res: 'The accountant gets a <strong>ready cashflow in real time</strong> — no folders, no losses, no manual entry. 400 documents per month processed automatically.',
+      c3_ins: '<strong>Insight:</strong> losing 5% of 400 receipts means blind spots in finances worth tens of thousands. Automation eliminates the human factor entirely.',
+      c3_s1: '<strong>Mobile capture</strong> — foreman photographs a receipt or invoice and sends it to the Telegram bot. No folders, no physical storage',
+      c3_s2: '<strong>OCR + AI parsing</strong> — OpenAI Vision extracts amount, date, counterparty and expense category. Python script validates and normalizes data',
+      c3_s3: '<strong>Auto-write to cashflow</strong> — Make passes structured data to the spreadsheet. Expense appears in cashflow instantly, no accountant needed',
+      c3_s4: '<strong>Bank reconciliation</strong> — spreadsheet contains all expenses with dates and amounts, reconciliation takes minutes instead of 2 hours',
+      sc_order_page: 'Order page',
+      sc_builder: 'Trdelnik builder',
+      sc_cart: 'Cart & checkout',
+      sc_kitchen: 'Kitchen alerts',
+      sc_admin: 'Admin panel',
+      sc_calc: 'Evotor payroll calc',
+      sc_summary: 'Employee summary',
+      tag_cafe: 'Café',
+      tag_orders: 'Orders',
+      tag_hr: 'HR / Payroll',
+      tag_construction: 'Construction',
+      c1_m2: 'Railway guarantee',
+      c2_m2: 'calculation errors',
+      c3_m2: 'lost documents',
+      filter_cafe: 'Café / HoReCa',
+      filter_ecom: 'E-commerce',
+      filter_hr: 'HR / Payroll',
+      filter_ocr: 'Construction',
+      label_look: 'How it looks',
+      label_stack: 'Stack',
+      tag_evotor: 'Evotor',
+      page_title: 'Case Studies — Level Up',
+      cta_btn_wa: 'Message on WhatsApp',
+      tag_city1: 'Prague, 2026',
+      c3_stack: '<strong>Make</strong> (orchestration) · <strong>OpenAI Vision</strong> (OCR + parsing) · <strong>Python</strong> (data validation) · <strong>Telegram Bot</strong> (photo capture) · <strong>Google Sheets</strong> (cashflow)',
+    }
+  };
+
+  function setLang(lang) {
+    var t = T[lang];
+    if (!t) return;
+    document.querySelectorAll('.lang-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.querySelectorAll('.cta-btn span[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (t[key]) el.innerHTML = t[key];
+    });
+    document.documentElement.lang = lang;
+    var titleEl = document.getElementById('page-title');
+    if (titleEl && t.page_title) titleEl.textContent = t.page_title;
+  }
+
+  // ── LANG BUTTONS ──
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      setLang(btn.dataset.lang);
+    });
+  });
+
+}); // DOMContentLoaded
+</script>
+</body>
+</html>
