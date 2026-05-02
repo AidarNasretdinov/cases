@@ -556,7 +556,54 @@
   }
 
 
-  /* LANG SWITCHER */
+  .hero-cta {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--indigo);
+    color: #fff;
+    font-family: 'Onest', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 13px 22px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hero-cta:hover { opacity: 0.88; }
+  .hero-cta:active { transform: scale(0.97); }
+  .hero-cta svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* CASE INLINE CTA */
+  .case-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(65,86,195,0.05);
+    border: 1px solid rgba(65,86,195,0.2);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .case-cta:hover { background: rgba(65,86,195,0.09); border-color: rgba(65,86,195,0.35); }
+  .case-cta:active { opacity: 0.85; }
+  .case-cta-text { font-size: 13px; color: var(--indigo); font-weight: 600; line-height: 1.4; }
+  .case-cta-sub { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 400; }
+  .case-cta-arrow {
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--indigo);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; transition: transform 0.2s;
+  }
+  .case-cta:hover .case-cta-arrow { transform: translateX(3px); }
+  .case-cta-arrow svg { width: 13px; height: 13px; }
   .lang-switcher {
     display: flex;
     gap: 2px;
@@ -618,6 +665,10 @@
   <header>
     <h1 data-i18n="h1">Vaši konkurenti už<br>to nedělají <em>ručně</em></h1>
     <p class="header-sub" data-i18n="header_sub">Pomáháme malým firmám odstranit manuální práci z operací. Každý případ níže — skutečný klient, skutečná čísla.</p>
+    <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="hero-cta" id="hero-cta-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span data-i18n="hero_cta">Získat audit zdarma</span>
+    </a>
   </header>
 
   <div class="stats-row">
@@ -710,6 +761,15 @@
           <div class="insight">
             <p data-i18n="c1_ins"><strong>Insight:</strong> agregátoři berou nejen provizi — berou zákaznickou základnu. Vlastní systém buduje opakované objednávky, které se časem zhodnocují.</p>
           </div>
+          <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="case-cta">
+            <div>
+              <div class="case-cta-text" data-i18n="case_cta_text">Máte podobnou situaci?</div>
+              <div class="case-cta-sub" data-i18n="case_cta_sub">Získejte bezplatný audit procesů</div>
+            </div>
+            <div class="case-cta-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
           <div>
             <div class="section-label" data-i18n="label_look">Jak to vypadá</div>
             <div class="screenshots">
@@ -791,6 +851,15 @@
           <div class="insight">
             <p data-i18n="c2_ins"><strong>Insight:</strong> 6 hodin účetního jsou ~3 000 CZK přímých nákladů plus riziko chyb vedoucích ke konfliktům se zaměstnanci. Vrátí se za první měsíc.</p>
           </div>
+          <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="case-cta">
+            <div>
+              <div class="case-cta-text" data-i18n="case_cta_text">Máte podobnou situaci?</div>
+              <div class="case-cta-sub" data-i18n="case_cta_sub">Získejte bezplatný audit procesů</div>
+            </div>
+            <div class="case-cta-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
           <div>
             <div class="section-label" data-i18n="label_look">Jak to vypadá</div>
             <div class="screenshots">
@@ -864,6 +933,15 @@
           <div class="insight">
             <p data-i18n="c3_ins"><strong>Insight:</strong> ztráta 5% účtenek ze 400 jsou slepá místa ve financích za desítky tisíc korun. Automatizace zcela eliminuje lidský faktor.</p>
           </div>
+          <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="case-cta">
+            <div>
+              <div class="case-cta-text" data-i18n="case_cta_text">Máte podobnou situaci?</div>
+              <div class="case-cta-sub" data-i18n="case_cta_sub">Získejte bezplatný audit procesů</div>
+            </div>
+            <div class="case-cta-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
           <div>
             <div class="section-label" data-i18n="label_stack">Stack</div>
             <div class="steps">
@@ -923,11 +1001,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // ── CASE TOGGLE ──
   document.querySelectorAll('.case-card').forEach(function(card) {
     card.addEventListener('click', function() {
-      var body = card.querySelector('.case-body');
-      var isOpen = card.classList.contains('open');
+      const body = card.querySelector('.case-body');
+      const isOpen = card.classList.contains('open');
       document.querySelectorAll('.case-card').forEach(function(c) {
         c.classList.remove('open');
-        var b = c.querySelector('.case-body');
+        const b = c.querySelector('.case-body');
         if (b) b.classList.remove('open');
       });
       if (!isOpen) {
@@ -940,14 +1018,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Fix: prevent case-cta clicks from bubbling up to case-card and closing it
+  document.querySelectorAll('.case-cta').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+
   // ── FILTERS ──
   document.querySelectorAll('.filter-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      var f = btn.dataset.filter;
+      const f = btn.dataset.filter;
       document.querySelectorAll('[data-tags]').forEach(function(el) {
-        el.classList.toggle('hidden', f !== 'all' && !el.dataset.tags.includes(f));
+        // Fix: use exact word match instead of substring — "horeca".includes("hr") was true
+        const tags = el.dataset.tags.split(' ');
+        el.classList.toggle('hidden', f !== 'all' && !tags.includes(f));
       });
     });
   });
@@ -1025,6 +1112,9 @@ document.addEventListener('DOMContentLoaded', function() {
       page_title: 'Кейсы — Level Up',
       cta_btn_wa: 'Написать в WhatsApp',
       cta_btn_quiz: 'Пройти чек-лист',
+      hero_cta: 'Получить бесплатный аудит',
+      case_cta_text: 'Похожая ситуация?',
+      case_cta_sub: 'Получить бесплатный аудит процессов →',
       tag_city1: 'Прага, 2026',
       c3_stack: '<strong>Make</strong> (оркестрация) · <strong>OpenAI Vision</strong> (OCR + разбор) · <strong>Python</strong> (валидация данных) · <strong>Telegram Bot</strong> (сбор фото) · <strong>Google Sheets</strong> (cashflow)',
     },
@@ -1099,6 +1189,9 @@ document.addEventListener('DOMContentLoaded', function() {
       page_title: 'Případové studie — Level Up',
       cta_btn_wa: 'Napsat na WhatsApp',
       cta_btn_quiz: 'Projít checklist',
+      hero_cta: 'Získat audit zdarma',
+      case_cta_text: 'Máte podobnou situaci?',
+      case_cta_sub: 'Získejte audit procesů zdarma →',
       tag_city1: 'Praha, 2026',
       c3_stack: '<strong>Make</strong> (orchestrace) · <strong>OpenAI Vision</strong> (OCR + analýza) · <strong>Python</strong> (validace dat) · <strong>Telegram Bot</strong> (sběr fotek) · <strong>Google Sheets</strong> (cashflow)',
     },
@@ -1173,31 +1266,47 @@ document.addEventListener('DOMContentLoaded', function() {
       page_title: 'Case Studies — Level Up',
       cta_btn_wa: 'Message on WhatsApp',
       cta_btn_quiz: 'Take the checklist',
+      hero_cta: 'Get a free audit',
+      case_cta_text: 'Have a similar situation?',
+      case_cta_sub: 'Get a free process audit →',
       tag_city1: 'Prague, 2026',
       c3_stack: '<strong>Make</strong> (orchestration) · <strong>OpenAI Vision</strong> (OCR + parsing) · <strong>Python</strong> (data validation) · <strong>Telegram Bot</strong> (photo capture) · <strong>Google Sheets</strong> (cashflow)',
     }
   };
 
   function setLang(lang) {
-    var t = T[lang];
+    const t = T[lang];
     if (!t) return;
     document.querySelectorAll('.lang-btn').forEach(function(b) {
       b.classList.toggle('active', b.dataset.lang === lang);
     });
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n');
+      const key = el.getAttribute('data-i18n');
       if (t[key] !== undefined) el.innerHTML = t[key];
     });
     document.querySelectorAll('.cta-btn span[data-i18n]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n');
+      const key = el.getAttribute('data-i18n');
       if (t[key]) el.innerHTML = t[key];
     });
     document.documentElement.lang = lang;
-    var titleEl = document.getElementById('page-title');
+    const titleEl = document.getElementById('page-title');
     if (titleEl && t.page_title) titleEl.textContent = t.page_title;
-    var quizUrls = {ru: 'https://aidarnasretdinov.github.io/quiz/?lang=ru', cs: 'https://aidarnasretdinov.github.io/quiz/?lang=cs', en: 'https://aidarnasretdinov.github.io/quiz/?lang=en'};
-    var quizBtn = document.getElementById('quiz-btn');
+    const quizUrls = {ru: 'https://aidarnasretdinov.github.io/quiz/?lang=ru', cs: 'https://aidarnasretdinov.github.io/quiz/?lang=cs', en: 'https://aidarnasretdinov.github.io/quiz/?lang=en'};
+    const quizBtn = document.getElementById('quiz-btn');
     if (quizBtn && quizUrls[lang]) quizBtn.href = quizUrls[lang];
+
+    // ── CTA LINKS per language ──
+    // RU → Telegram, CS + EN → WhatsApp
+    const ctaUrl = (lang === 'ru')
+      ? 'https://t.me/aidar_nasretdinov'
+      : 'https://wa.me/420776627409';
+
+    const heroCta = document.getElementById('hero-cta-btn');
+    if (heroCta) heroCta.href = ctaUrl;
+
+    document.querySelectorAll('.case-cta').forEach(function(el) {
+      el.href = ctaUrl;
+    });
   }
 
   // ── LANG BUTTONS ──
