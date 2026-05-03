@@ -1371,7 +1371,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.documentElement.lang = lang;
     const titleEl = document.getElementById('page-title');
     if (titleEl && t.page_title) titleEl.textContent = t.page_title;
-    const quizUrls = {ru: 'https://aidarnasretdinov.github.io/quiz/?lang=ru', cs: 'https://aidarnasretdinov.github.io/quiz/?lang=cs', en: 'https://aidarnasretdinov.github.io/quiz/?lang=en'};
+    const quizUrls = {
+  ru: '/quiz/?lang=ru',
+  cs: '/quiz/?lang=cs',
+  en: '/quiz/?lang=en'
+};
     const quizBtn = document.getElementById('quiz-btn');
     if (quizBtn && quizUrls[lang]) quizBtn.href = quizUrls[lang];
 
