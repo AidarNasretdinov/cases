@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Checklist: kde vaše firma ztrácí čas a peníze</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: #f5f7fc;
+  padding: 20px 16px 40px;
+  color: #1a1a2e;
+}
+
+.container { max-width: 860px; margin: auto; }
+
+h1 { font-size: 24px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
+h1 span { color: #4c6fff; }
+
+.subtitle { font-size: 14px; color: #666; margin-bottom: 20px; }
+
+/* PROGRESS */
+.progress-wrap {
+  background: white;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.progress-bar-bg {
+  flex: 1; height: 8px; background: #eee; border-radius: 99px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: #4c6fff; border-radius: 99px; width: 0%; transition: width 0.3s ease;
+}
+.progress-label { font-size: 13px; font-weight: 600; color: #4c6fff; white-space: nowrap; }
+
+/* QUIZ GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.card.unanswered { border-color: #f0b429; }
+.card.answered { border-color: transparent; box-shadow: 0 0 0 2px #4c6fff33; }
+.card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.card ul { padding-left: 16px; font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; }
+
+.btn-group { display: flex; gap: 6px; }
+.btn {
+  flex: 1; padding: 10px 0; border-radius: 12px; border: 2px solid transparent;
+  cursor: pointer; font-size: 12px; font-weight: 600; text-align: center;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.btn:hover { transform: scale(1.04); }
+.btn.active { border-color: #1a1a2e; }
+.btn-0 { background: #e6ecff; color: #4c6fff; }
+.btn-1 { background: #fff3c4; color: #a07800; }
+.btn-2 { background: #4c6fff; color: white; }
+
+/* FORM */
+.lead-form {
+  display: none;
+  background: white;
+  padding: 28px 24px;
+  border-radius: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+.lead-form h2 { font-size: 20px; margin-bottom: 8px; }
+.lead-form p { font-size: 14px; color: #666; margin-bottom: 20px; }
+.lead-form input {
+  width: 100%; padding: 15px 18px; margin-bottom: 10px;
+  border-radius: 14px; border: 1.5px solid #ddd; font-size: 15px;
+  outline: none; transition: border-color 0.2s; display: block;
+}
+.lead-form input:focus { border-color: #4c6fff; }
+.lead-form .submit-btn {
+  margin-top: 6px; width: 100%; padding: 16px; background: #4c6fff;
+  color: white; border: none; border-radius: 14px; font-size: 16px;
+  font-weight: 700; cursor: pointer; transition: background 0.2s;
+}
+.lead-form .submit-btn:hover { background: #3a56e0; }
+.lead-form .submit-btn:disabled { background: #aab5e8; cursor: not-allowed; }
+.error { color: #e03a3a; font-size: 13px; margin: 4px 0 8px; min-height: 18px; }
+.privacy { font-size: 11px; color: #aaa; margin-top: 12px; }
+
+/* RESULT */
+.result {
+  display: none;
+  margin-top: 20px;
+  background: white;
+  padding: 28px 24px;
+  border-radius: 20px;
+  text-align: center;
+}
+.result-score { font-size: 56px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.result-label { font-size: 13px; color: #999; margin-bottom: 16px; }
+.result-headline { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+.result-text { font-size: 15px; color: #444; line-height: 1.6; margin-bottom: 24px; }
+.audit-btn {
+  display: block; width: 100%; padding: 16px; border-radius: 14px;
+  background: #4c6fff; color: white; border: none; font-size: 16px;
+  font-weight: 700; cursor: pointer; text-decoration: none; transition: background 0.2s;
+}
+.audit-btn:hover { background: #3a56e0; }
+.audit-note { font-size: 12px; color: #aaa; margin-top: 10px; }
+
+/* TWO CTA BUTTONS */
+.call-btn {
+  display: block; width: 100%; padding: 16px; border-radius: 14px;
+  background: #4c6fff; color: white; border: none; font-size: 16px;
+  font-weight: 700; cursor: pointer; text-decoration: none;
+  transition: background 0.2s; margin-bottom: 10px; text-align: center;
+}
+.call-btn:hover { background: #3a56e0; }
+.tg-btn {
+  display: block; width: 100%; padding: 14px; border-radius: 14px;
+  background: white; color: #4c6fff; border: 2px solid #4c6fff; font-size: 15px;
+  font-weight: 600; cursor: pointer; text-decoration: none;
+  transition: all 0.2s; text-align: center;
+}
+.tg-btn:hover { background: #f0f3ff; }
+.score-ok  { color: #2da84e; }
+.score-mid { color: #e0a030; }
+.score-bad { color: #e03a3a; }
+
+/* INDUSTRY SELECT */
+.lead-form select {
+  width: 100%; padding: 15px 18px; margin-bottom: 10px;
+  border-radius: 14px; border: 1.5px solid #ddd; font-size: 15px;
+  outline: none; transition: border-color 0.2s; display: block;
+  background: white; color: #1a1a2e; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+  cursor: pointer;
+}
+.lead-form select:focus { border-color: #4c6fff; }
+.lead-form select.error-field { border-color: #e03a3a; }
+.lead-form input.error-field { border-color: #e03a3a; }
+.lead-form select option[value=""] { color: #999; }
+
+/* TOP PAINS BLOCK */
+.top-pains {
+  background: #f5f7ff;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.top-pains-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4c6fff;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.top-pains-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 8px; font-size: 14px; color: #333; line-height: 1.5;
+}
+.top-pains-item:last-child { margin-bottom: 0; }
+.pain-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #4c6fff;
+  flex-shrink: 0; margin-top: 5px;
+}
+.pain-dot.red { background: #e03a3a; }
+
+/* TIMING NOTE */
+.timing-note {
+  font-size: 13px; color: #2da84e; font-weight: 600;
+  margin-top: 10px; margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div style="margin-bottom: 20px;">
+    <img src="https://raw.githubusercontent.com/AidarNasretdinov/quiz/main/5.png" alt="Логотип" style="height: 48px; width: auto;">
+  </div>
+
+  <h1>Чек-лист: <span>где бизнес теряет время и деньги</span></h1>
+  <p class="subtitle">Ответьте честно — нет / иногда / это мы</p>
+
+  <div class="progress-wrap">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">0 / 8</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="grid">
+
+    <div class="card" id="card_0">
+      <h3>1. Зависимость от людей</h3>
+      <ul>
+        <li>Если ключевой сотрудник заболеет — клиенты не получат ответы вовремя</li>
+        <li>Вы сами будете делать его работу</li>
+        <li>Вы даже не знаете весь список его задач</li>
+        <li>Процессы держатся в головах, а не в системах</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(0,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(0,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(0,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+    <div class="card" id="card_1">
+      <h3>2. Потеря клиентов</h3>
+      <ul>
+        <li>За последние 3 месяца клиент ушёл из-за нашей ошибки или забывчивости</li>
+        <li>Забывали перезвонить или написать в нужный момент</li>
+        <li>Путали данные или договорённости с клиентом</li>
+        <li>Возможно, клиенты уходили — мы просто не знаем</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(1,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(1,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(1,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+    <div class="card" id="card_2">
+      <h3>3. Скорость реакции</h3>
+      <ul>
+        <li>От заявки до первого контакта — больше часа</li>
+        <li>Клиент уже купил у другого, пока мы думали</li>
+        <li>Первый кто ответил — тот и получил клиента, не мы</li>
+        <li>Не знаем, как быстро реагируем на самом деле</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(2,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(2,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(2,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+    <div class="card" id="card_3">
+      <h3>4. Хаос в общении</h3>
+      <ul>
+        <li>История с клиентом живёт в личных мессенджерах сотрудников</li>
+        <li>Сотрудник ушёл — вся история с ним и пропала</li>
+        <li>Клиент жалуется, что приходится объяснять всё заново</li>
+        <li>Сообщения теряются между Telegram, почтой и WhatsApp</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(3,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(3,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(3,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+    <div class="card" id="card_4">
+      <h3>5. Деньги в трубе</h3>
+      <ul>
+        <li>Не знаем точно, сколько заявок висит без ответа прямо сейчас</li>
+        <li>Заявки приходят в разные места — телефон, мессенджеры, почта</li>
+        <li>Менеджеры сами решают, кому перезванивать и когда</li>
+        <li>Не знаем, откуда приходят самые прибыльные клиенты</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(4,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(4,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(4,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+    <div class="card" id="card_5">
+      <h3>6. Финансовая слепота</h3>
+      <ul>
+        <li>За 5 минут узнать, сколько заработали в этом месяце — нереально</li>
+        <li>Данные о деньгах приходится собирать руками из нескольких мест</li>
+        <li>Финансовую картину видим только в конце месяца или позже</li>
+        <li>Непонятно, какой продукт или клиент реально самый прибыльный</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(5,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(5,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(5,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+    <div class="card" id="card_6">
+      <h3>7. Деньги на ручной труд</h3>
+      <ul>
+        <li>Платите зарплату за задачи, которые можно автоматизировать</li>
+        <li>Никто не считал, сколько рабочих часов в месяц уходит на рутину</li>
+        <li>Нанимаете новых людей, хотя проблема в процессах — не в людях</li>
+        <li>Расходы на команду растут, а производительность — нет</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(6,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(6,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(6,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+    <div class="card" id="card_7">
+      <h3>8. Потолок роста</h3>
+      <ul>
+        <li>Взять в 2 раза больше клиентов без хаоса — нереально</li>
+        <li>Команда уже перегружена при текущем объёме</li>
+        <li>Нового сотрудника некому нормально обучить</li>
+        <li>Рост завязан лично на вас — и вы не успеваете</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn btn-0" onclick="set(7,0,this)">0 — нет</button>
+        <button class="btn btn-1" onclick="set(7,1,this)">1 — иногда</button>
+        <button class="btn btn-2" onclick="set(7,2,this)">2 — это мы</button>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- FORM -->
+  <div class="lead-form" id="leadForm">
+    <h2 id="formHeading">Вы ответили на все вопросы 🎯</h2>
+    <p id="formSub">Оставьте контакт — я пришлю разбор вашей ситуации и покажу, где именно теряются деньги</p>
+    <input id="fname" placeholder="Ваше имя" autocomplete="name" required minlength="2">
+    <input id="fphone" placeholder="+420 123 456 789" type="tel" autocomplete="tel" required>
+    <select id="findustry">
+      <option value="" disabled selected id="industryPlaceholder">Сфера бизнеса</option>
+      <option value="horeca" id="ind_horeca">🍽️ HoReCa (кафе, ресторан, отель)</option>
+      <option value="construction" id="ind_construction">🏗️ Строительство / Недвижимость</option>
+      <option value="retail" id="ind_retail">🛒 Ритейл / E-commerce</option>
+      <option value="services" id="ind_services">💼 Услуги / Консалтинг</option>
+      <option value="hr" id="ind_hr">👔 HR / Рекрутинг</option>
+      <option value="other" id="ind_other">📦 Другое</option>
+    </select>
+    <div class="error" id="ferror"></div>
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">Получить результат →</button>
+    <p class="privacy">Данные не передаются третьим лицам</p>
+  </div>
+
+  <div class="result" id="result">
+    <div class="result-score" id="scoreNum"></div>
+    <div class="result-label" id="resultLabel">баллов из 16</div>
+    <div class="result-headline" id="resultHeadline"></div>
+    <div class="result-text" id="resultText"></div>
+    <div class="top-pains" id="topPains"></div>
+    <a class="audit-btn call-btn" href="tel:+420776627409" id="callBtnEl">
+      📞 Позвонить — обсудить аудит
+    </a>
+    <a class="audit-btn tg-btn" href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" id="auditBtnEl">
+      ✈️ Написать в Telegram
+    </a>
+    <p class="audit-note" id="auditNoteEl">Напишите мне в Telegram — разберём ваш бизнес бесплатно</p>
+    <p class="timing-note" id="timingNote">⏱ Обычно связываюсь в течение 2–3 часов в рабочее время</p>
+  </div>
+
+</div>
+
+<script>
+const WEBHOOK = "https://hook.eu1.make.com/qt6ddmq795lcq2wcpvggji5740vvfcv5";
+
+/* ── TRANSLATIONS ── */
+const translations = {
+  cs: {
+    page_title: "Checklist: kde vaše firma ztrácí čas a peníze",
+    title: "Checklist:",
+    titleSpan: "kde vaše firma ztrácí čas a peníze",
+    subtitle: "Odpovězte upřímně — ne / občas / to jsme my",
+    buttons: { no: "0 — ne", sometimes: "1 — občas", us: "2 — to jsme my" },
+    cards: [
+      { title: "Závislost na lidech", items: [
+        "Když klíčový zaměstnanec onemocní — klienti nedostanou odpovědi včas",
+        "Děláte jeho práci sami",
+        "Ani nevíte celý seznam jeho úkolů",
+        "Procesy žijí v hlavách, ne v systémech"
+      ]},
+      { title: "Ztráta klientů", items: [
+        "Za poslední 3 měsíce odešel klient kvůli naší chybě nebo zapomnětlivosti",
+        "Zapomněli jsme zavolat nebo napsat ve správný moment",
+        "Pletli jsme data nebo dohody s klientem",
+        "Možná klienti odcházeli — prostě nevíme"
+      ]},
+      { title: "Rychlost reakce", items: [
+        "Od poptávky do prvního kontaktu — více než hodina",
+        "Klient už koupil jinde, zatímco jsme přemýšleli",
+        "První kdo odpověděl — ten získal klienta, ne my",
+        "Nevíme, jak rychle vlastně reagujeme"
+      ]},
+      { title: "Chaos v komunikaci", items: [
+        "Historie s klientem žije v osobních messengerech zaměstnanců",
+        "Zaměstnanec odešel — celá historie s ním zmizela",
+        "Klient si stěžuje, že musí vše vysvětlovat znovu",
+        "Zprávy se ztrácejí mezi Telegramem, e-mailem a WhatsAppem"
+      ]},
+      { title: "Peníze v trubce", items: [
+        "Přesně nevíme, kolik poptávek čeká bez odpovědi právě teď",
+        "Poptávky přicházejí na různá místa — telefon, messengery, e-mail",
+        "Obchodníci sami rozhodují, komu a kdy zavolat",
+        "Nevíme, odkud přicházejí nejziskovější klienti"
+      ]},
+      { title: "Finanční slepota", items: [
+        "Za 5 minut zjistit, kolik jsme vydělali tento měsíc — nereálné",
+        "Data o penězích musíme sbírat ručně z několika míst",
+        "Finanční obraz vidíme až na konci měsíce nebo později",
+        "Není jasné, který produkt nebo klient je skutečně nejziskovější"
+      ]},
+      { title: "Peníze za ruční práci", items: [
+        "Platíte mzdu za úkoly, které lze automatizovat",
+        "Nikdo nepočítal, kolik hodin měsíčně jde na rutinu",
+        "Přijímáte nové lidi, i když problém je v procesech — ne v lidech",
+        "Náklady na tým rostou, produktivita ne"
+      ]},
+      { title: "Strop růstu", items: [
+        "Vzít dvakrát více klientů bez chaosu — nereálné",
+        "Tým je přetížený při současném objemu",
+        "Nového zaměstnance nemá kdo pořádně zaškolit",
+        "Růst závisí osobně na vás — a nestíháte"
+      ]}
+    ],
+    form: {
+      heading: "Odpověděli jste na všechny otázky 🎯",
+      sub: "Zanechte kontakt — pošlu vám rozbor vaší situace a ukážu, kde přesně ztrácíte peníze",
+      namePlaceholder: "Vaše jméno",
+      phonePlaceholder: "+420 123 456 789",
+      nameError: "Zadejte své jméno",
+      phoneError: "Zadejte správné telefonní číslo",
+      industryError: "Vyberte prosím oblast podnikání",
+      submitBtn: "Získat výsledek →",
+      submitting: "Odesíláme...",
+      privacy: "Data nejsou sdílena s třetími stranami"
+    },
+    result: {
+      label: "bodů z 16",
+      low:  { head: ", máte dobrý základ", text: "Kritické problémy nejsou — to je vzácné. Ale možnosti růstu jsou vždy. Na auditu najdeme, kde lze zrychlit a ušetřit zdroje bez náboru nových lidí." },
+      mid:  { head: ", firma ztrácí peníze právě teď", text: "Nejde o abstrakci — každý den s takovými procesy stojí reálné peníze. Tady jsou vaše hlavní ztráty:" },
+      high: { head: ", to je kritická zóna", text: "Firma funguje na ručním řízení a každý měsíc ztrácí značné peníze. Čím déle čekáte — tím dražší každý den. Tady to bolí nejvíc:" }
+    },
+    auditBtn: "Získat audit zdarma",
+    auditNote: "Napište mi na Telegram — rozebereme vaše podnikání zdarma",
+    timingNote: "⏱ Obvykle se ozvu do 2–3 hodin v pracovní době",
+    callBtn: "📞 Zavolat — probrat audit",
+    tgBtn: "✈️ Napsat na Telegram",
+    topPainsTitle: "Vaše hlavní oblasti ztrát:",
+    industryPlaceholder: "Oblast podnikání",
+    industries: {
+      horeca: "🍽️ HoReCa (kavárna, restaurace, hotel)",
+      construction: "🏗️ Stavebnictví / Nemovitosti",
+      retail: "🛒 Maloobchod / E-commerce",
+      services: "💼 Služby / Poradenství",
+      hr: "👔 HR / Nábor",
+      other: "📦 Jiné"
+    },
+    painLabels: [
+      "Procesy závisí na lidech — jedna nemoc vytváří chaos",
+      "Klienti odcházejí kvůli chybám a zapomnětlivosti",
+      "Pomalá reakce — ztrácíte poptávky ve prospěch konkurence",
+      "Chaos v komunikaci — historie s klienty se ztrácí",
+      "Poptávky bez odpovědi — peníze doslova v trubce",
+      "Žádný finanční přehled v reálném čase",
+      "Platíte mzdy za to, co lze automatizovat",
+      "Růst závisí osobně na vás — škálování není možné"
+    ]
+  },
+
+  en: {
+    page_title: "Checklist: where your business loses time and money",
+    title: "Checklist:",
+    titleSpan: "where your business loses time and money",
+    subtitle: "Answer honestly — no / sometimes / that's us",
+    buttons: { no: "0 — no", sometimes: "1 — sometimes", us: "2 — that's us" },
+    cards: [
+      { title: "People dependency", items: [
+        "If a key employee gets sick — clients won't get answers on time",
+        "You end up doing their job yourself",
+        "You don't even know the full list of their tasks",
+        "Processes live in people's heads, not in systems"
+      ]},
+      { title: "Client loss", items: [
+        "In the last 3 months, a client left due to our mistake or forgetfulness",
+        "We forgot to call or message at the right moment",
+        "We mixed up data or agreements with a client",
+        "Clients may have left — we simply don't know"
+      ]},
+      { title: "Response speed", items: [
+        "From inquiry to first contact — more than an hour",
+        "The client already bought elsewhere while we were thinking",
+        "The first to respond gets the client — and it wasn't us",
+        "We don't know how fast we actually respond"
+      ]},
+      { title: "Communication chaos", items: [
+        "Client history lives in employees' personal messengers",
+        "An employee left — all history disappeared with them",
+        "Clients complain they have to explain everything again",
+        "Messages get lost between Telegram, email and WhatsApp"
+      ]},
+      { title: "Money in the pipeline", items: [
+        "We don't know how many inquiries are waiting unanswered right now",
+        "Inquiries come from different places — phone, messengers, email",
+        "Sales reps decide on their own who to call and when",
+        "We don't know where our most profitable clients come from"
+      ]},
+      { title: "Financial blindness", items: [
+        "Finding out how much we earned this month in 5 minutes — impossible",
+        "Financial data has to be collected manually from multiple places",
+        "We see the full financial picture only at end of month or later",
+        "It's unclear which product or client is actually most profitable"
+      ]},
+      { title: "Paying for manual work", items: [
+        "You pay salaries for tasks that could be automated",
+        "Nobody counted how many work hours per month go into routine",
+        "You hire new people when the problem is in processes — not people",
+        "Team costs grow, productivity doesn't"
+      ]},
+      { title: "Growth ceiling", items: [
+        "Taking twice as many clients without chaos — unrealistic",
+        "The team is already overloaded at current volume",
+        "There's nobody to properly onboard a new employee",
+        "Growth depends personally on you — and you can't keep up"
+      ]}
+    ],
+    form: {
+      heading: "You've answered all questions 🎯",
+      sub: "Leave your contact — I'll send you a breakdown of your situation and show where exactly you're losing money",
+      namePlaceholder: "Your name",
+      phonePlaceholder: "+420 123 456 789",
+      nameError: "Please enter your name",
+      phoneError: "Please enter a valid phone number",
+      industryError: "Please select your industry",
+      submitBtn: "Get result →",
+      submitting: "Sending...",
+      privacy: "Data is not shared with third parties"
+    },
+    result: {
+      label: "points out of 16",
+      low:  { head: ", you have a good foundation", text: "No critical issues — that's rare. But there are always growth opportunities. In the audit we'll find where you can speed up and save resources without hiring more people." },
+      mid:  { head: ", your business is losing money right now", text: "This isn't abstract — every day with these processes costs real money. Here are your main loss points:" },
+      high: { head: ", this is a critical zone", text: "The business runs on manual management and loses significant money every month. The longer you wait — the more expensive each day becomes. Here's where it hurts most:" }
+    },
+    auditBtn: "Get a free process audit",
+    auditNote: "Message me on Telegram — we'll analyze your business for free",
+    timingNote: "⏱ I usually respond within 2–3 hours during business hours",
+    callBtn: "📞 Call — discuss the audit",
+    tgBtn: "✈️ Message on Telegram",
+    topPainsTitle: "Your main loss areas:",
+    industryPlaceholder: "Industry",
+    industries: {
+      horeca: "🍽️ HoReCa (café, restaurant, hotel)",
+      construction: "🏗️ Construction / Real Estate",
+      retail: "🛒 Retail / E-commerce",
+      services: "💼 Services / Consulting",
+      hr: "👔 HR / Recruiting",
+      other: "📦 Other"
+    },
+    painLabels: [
+      "Processes depend on people — one sick day creates chaos",
+      "Clients leave due to mistakes and forgetfulness",
+      "Slow response — you're losing leads to competitors",
+      "Communication chaos — client history gets lost",
+      "Unanswered inquiries — money literally down the drain",
+      "No real-time financial picture",
+      "You pay salaries for tasks that can be automated",
+      "Growth depends personally on you — scaling is impossible"
+    ]
+  },
+
+  ru: {
+    page_title: "Чек-лист: где бизнес теряет время и деньги",
+    title: "Чек-лист:",
+    titleSpan: "где бизнес теряет время и деньги",
+    subtitle: "Ответьте честно — нет / иногда / это мы",
+    buttons: { no: "0 — нет", sometimes: "1 — иногда", us: "2 — это мы" },
+    cards: [
+      { title: "Зависимость от людей", items: [
+        "Если ключевой сотрудник заболеет — клиенты не получат ответы вовремя",
+        "Вы сами будете делать его работу",
+        "Вы даже не знаете весь список его задач",
+        "Процессы держатся в головах, а не в системах"
+      ]},
+      { title: "Потеря клиентов", items: [
+        "За последние 3 месяца клиент ушёл из-за нашей ошибки или забывчивости",
+        "Забывали перезвонить или написать в нужный момент",
+        "Путали данные или договорённости с клиентом",
+        "Возможно, клиенты уходили — мы просто не знаем"
+      ]},
+      { title: "Скорость реакции", items: [
+        "От заявки до первого контакта — больше часа",
+        "Клиент уже купил у другого, пока мы думали",
+        "Первый кто ответил — тот и получил клиента, не мы",
+        "Не знаем, как быстро реагируем на самом деле"
+      ]},
+      { title: "Хаос в общении", items: [
+        "История с клиентом живёт в личных мессенджерах сотрудников",
+        "Сотрудник ушёл — вся история с ним и пропала",
+        "Клиент жалуется, что приходится объяснять всё заново",
+        "Сообщения теряются между Telegram, почтой и WhatsApp"
+      ]},
+      { title: "Деньги в трубе", items: [
+        "Не знаем точно, сколько заявок висит без ответа прямо сейчас",
+        "Заявки приходят в разные места — телефон, мессенджеры, почта",
+        "Менеджеры сами решают, кому перезванивать и когда",
+        "Не знаем, откуда приходят самые прибыльные клиенты"
+      ]},
+      { title: "Финансовая слепота", items: [
+        "За 5 минут узнать, сколько заработали в этом месяце — нереально",
+        "Данные о деньгах приходится собирать руками из нескольких мест",
+        "Финансовую картину видим только в конце месяца или позже",
+        "Непонятно, какой продукт или клиент реально самый прибыльный"
+      ]},
+      { title: "Деньги на ручной труд", items: [
+        "Платите зарплату за задачи, которые можно автоматизировать",
+        "Никто не считал, сколько рабочих часов в месяц уходит на рутину",
+        "Нанимаете новых людей, хотя проблема в процессах — не в людях",
+        "Расходы на команду растут, а производительность — нет"
+      ]},
+      { title: "Потолок роста", items: [
+        "Взять в 2 раза больше клиентов без хаоса — нереально",
+        "Команда уже перегружена при текущем объёме",
+        "Нового сотрудника некому нормально обучить",
+        "Рост завязан лично на вас — и вы не успеваете"
+      ]}
+    ],
+    form: {
+      heading: "Вы ответили на все вопросы 🎯",
+      sub: "Оставьте контакт — я пришлю разбор вашей ситуации и покажу, где именно теряются деньги",
+      namePlaceholder: "Ваше имя",
+      phonePlaceholder: "+420 123 456 789",
+      nameError: "Введите ваше имя",
+      phoneError: "Введите корректный номер телефона",
+      industryError: "Пожалуйста, выберите сферу бизнеса",
+      submitBtn: "Получить результат →",
+      submitting: "Отправляем...",
+      privacy: "Данные не передаются третьим лицам"
+    },
+    result: {
+      label: "баллов из 16",
+      low:  { head: ", у вас хороший фундамент", text: "Критических проблем нет — это редкость. Но точки роста есть всегда. На аудите найдём, где можно ускориться и сэкономить ресурсы без найма новых людей." },
+      mid:  { head: ", бизнес теряет деньги прямо сейчас", text: "Это не абстрактно — каждый день с такими процессами стоит реальных денег. Вот ваши главные потери:" },
+      high: { head: ", это критическая зона", text: "Бизнес работает на ручном управлении и теряет значительные деньги каждый месяц. Чем дольше ждать — тем дороже обходится каждый день. Вот где больнее всего:" }
+    },
+    auditBtn: "Получить бесплатный аудит процессов",
+    auditNote: "Напишите мне в Telegram — разберём ваш бизнес бесплатно",
+    timingNote: "⏱ Обычно связываюсь в течение 2–3 часов в рабочее время",
+    callBtn: "📞 Позвонить — обсудить аудит",
+    tgBtn: "✈️ Написать в Telegram",
+    topPainsTitle: "Ваши главные точки потерь:",
+    industryPlaceholder: "Сфера бизнеса",
+    industries: {
+      horeca: "🍽️ HoReCa (кафе, ресторан, отель)",
+      construction: "🏗️ Строительство / Недвижимость",
+      retail: "🛒 Ритейл / E-commerce",
+      services: "💼 Услуги / Консалтинг",
+      hr: "👔 HR / Рекрутинг",
+      other: "📦 Другое"
+    },
+    painLabels: [
+      "Процессы зависят от людей — один больничный создаёт хаос",
+      "Клиенты уходят из-за ошибок и забывчивости",
+      "Медленная реакция — теряете заявки в пользу конкурентов",
+      "Хаос в коммуникациях — история с клиентами теряется",
+      "Заявки без ответа — деньги буквально в трубе",
+      "Нет финансовой картины в реальном времени",
+      "Платите зарплату за то, что можно автоматизировать",
+      "Рост завязан лично на вас — масштаб невозможен"
+    ]
+  }
+};
+
+/* ── LANGUAGE DETECTION ── */
+function detectLang() {
+  const param = new URLSearchParams(window.location.search).get('lang');
+  if (param && translations[param]) return param;
+  const browser = navigator.language.slice(0, 2).toLowerCase();
+  if (translations[browser]) return browser;
+  return 'cs';
+}
+
+const lang = detectLang();
+const t = translations[lang];
+
+// Fix: set html lang attribute to match detected language (SEO + a11y)
+document.documentElement.lang = lang;
+
+/* ── CONSTANTS ── */
+const TOTAL_QUESTIONS = 8;
+const SCORE_MAX = 16;
+const TIER_LOW = 5;
+const TIER_MID = 11;
+
+/* ── APPLY TRANSLATIONS ── */
+function applyTranslations() {
+  if (t.page_title) document.getElementById('page-title').textContent = t.page_title;
+  document.querySelector('h1').innerHTML = t.title + ' <span>' + t.titleSpan + '</span>';
+  document.querySelector('.subtitle').textContent = t.subtitle;
+  document.getElementById('resultLabel').textContent = t.result.label;
+  document.getElementById('auditBtnEl').textContent = t.tgBtn || t.auditBtn;
+  document.getElementById('callBtnEl').textContent = t.callBtn;
+  document.getElementById('auditNoteEl').textContent = t.auditNote;
+  document.getElementById('timingNote').textContent = t.timingNote;
+  document.getElementById('formHeading').textContent = t.form.heading;
+  document.getElementById('formSub').textContent = t.form.sub;
+  document.getElementById('fname').placeholder = t.form.namePlaceholder;
+  document.getElementById('fphone').placeholder = t.form.phonePlaceholder;
+  document.getElementById('submitBtn').textContent = t.form.submitBtn;
+  document.querySelector('.privacy').textContent = t.form.privacy;
+
+  // Translate industry select
+  if (t.industries) {
+    document.getElementById('industryPlaceholder').textContent = t.industryPlaceholder;
+    Object.keys(t.industries).forEach(key => {
+      const el = document.getElementById('ind_' + key);
+      if (el) el.textContent = t.industries[key];
+    });
+  }
+
+  t.cards.forEach((card, i) => {
+    const cardEl = document.getElementById('card_' + i);
+    cardEl.querySelector('h3').textContent = (i + 1) + '. ' + card.title;
+    cardEl.querySelectorAll('li').forEach((li, j) => { li.textContent = card.items[j]; });
+    const btns = cardEl.querySelectorAll('.btn');
+    btns[0].textContent = t.buttons.no;
+    btns[1].textContent = t.buttons.sometimes;
+    btns[2].textContent = t.buttons.us;
+  });
+}
+
+applyTranslations();
+
+/* ── QUIZ LOGIC ── */
+let answers = new Array(TOTAL_QUESTIONS).fill(null);
+let quizDone = false;
+let quizStarted = false;
+let formSubmitted = false;
+
+// Fix: deduplicated helper — no more repeated answers.filter() calls
+function getAnsweredCount() {
+  return answers.filter(a => a !== null).length;
+}
+
+function set(i, val, el) {
+  answers[i] = val;
+  el.parentNode.querySelectorAll(".btn").forEach(b => b.classList.remove("active"));
+  el.classList.add("active");
+
+  const card = document.getElementById("card_" + i);
+  card.classList.remove("unanswered");
+  card.classList.add("answered");
+
+  if (!quizStarted) {
+    quizStarted = true;
+    for (let j = 0; j < TOTAL_QUESTIONS; j++) {
+      if (answers[j] === null) document.getElementById("card_" + j).classList.add("unanswered");
+    }
+  }
+
+  updateProgress();
+  if (getAnsweredCount() === TOTAL_QUESTIONS && !quizDone) {
+    quizDone = true;
+    setTimeout(showForm, 400);
+  }
+}
+
+function updateProgress() {
+  const done = getAnsweredCount();
+  document.getElementById("progressFill").style.width = (done / TOTAL_QUESTIONS * 100) + "%";
+  document.getElementById("progressLabel").innerText = done + " / " + TOTAL_QUESTIONS;
+}
+
+function showForm() {
+  const form = document.getElementById("leadForm");
+  form.style.display = "block";
+  form.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function submitForm() {
+  if (formSubmitted) return;
+  const name = document.getElementById("fname").value.trim();
+  const phone = document.getElementById("fphone").value.replace(/\D/g, "");
+  const industry = document.getElementById("findustry").value; // Fix: empty string = falsy, validates correctly
+  const errEl = document.getElementById("ferror");
+
+  // Clear previous error highlights
+  ['fname','fphone','findustry'].forEach(id => document.getElementById(id).classList.remove('error-field'));
+
+  if (name.length < 2) { errEl.innerText = t.form.nameError; document.getElementById('fname').classList.add('error-field'); return; }
+  if (phone.length < 9) { errEl.innerText = t.form.phoneError; document.getElementById('fphone').classList.add('error-field'); return; }
+  if (!industry) { errEl.innerText = t.form.industryError; document.getElementById('findustry').classList.add('error-field'); return; }
+  errEl.innerText = "";
+
+  formSubmitted = true;
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerText = t.form.submitting;
+
+  const sum = answers.reduce((a, b) => a + b, 0);
+
+  fetch(WEBHOOK, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      type: "quiz_completed",
+      lang: lang,
+      lead_id: "lead_" + Date.now(),
+      name, phone, industry, score: sum, score_max: 16,
+      answers,
+      categories: t.cards.map((c, i) => ({ category: c.title, score: answers[i] }))
+    })
+  })
+  .then(res => { if (!res.ok) console.error("Webhook error:", res.status); else console.log("Webhook OK"); })
+  .catch(err => console.error("Webhook failed:", err))
+  .finally(() => showResult(sum, name));
+}
+
+function showResult(sum, name) {
+  document.getElementById("leadForm").style.display = "none";
+
+  const scoreEl = document.getElementById("scoreNum");
+  const headEl  = document.getElementById("resultHeadline");
+  const textEl  = document.getElementById("resultText");
+  const painsEl = document.getElementById("topPains");
+
+  scoreEl.innerText = sum;
+
+  let tier;
+  if (sum <= TIER_LOW) { tier = t.result.low; scoreEl.className = "result-score score-ok"; }
+  else if (sum <= TIER_MID) { tier = t.result.mid; scoreEl.className = "result-score score-mid"; }
+  else { tier = t.result.high; scoreEl.className = "result-score score-bad"; }
+
+  headEl.innerText = name + tier.head;
+  textEl.innerText = tier.text;
+
+  // Show top-2 pain points (categories with score >= 2, or highest if none)
+  if (sum > TIER_LOW && t.painLabels) {
+    const indexed = answers.map((s, i) => ({ i, s })).sort((a, b) => b.s - a.s);
+    const top = indexed.slice(0, 2).filter(x => x.s > 0);
+
+    if (top.length > 0) {
+      painsEl.style.display = 'block';
+      let html = '<div class="top-pains-title">' + t.topPainsTitle + '</div>';
+      top.forEach(x => {
+        const dotClass = x.s === 2 ? 'pain-dot red' : 'pain-dot';
+        html += '<div class="top-pains-item"><div class="' + dotClass + '"></div><span>' + t.painLabels[x.i] + '</span></div>';
+      });
+      painsEl.innerHTML = html;
+    } else {
+      painsEl.style.display = 'none';
+    }
+  } else {
+    painsEl.style.display = 'none';
+  }
+
+  const res = document.getElementById("result");
+  res.style.display = "block";
+  res.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+</body>
+</html>
