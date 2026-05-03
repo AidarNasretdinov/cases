@@ -1495,6 +1495,17 @@ document.addEventListener('DOMContentLoaded', function() {
 /* ── CUSTOM GA4 EVENTS ── */
 document.addEventListener('DOMContentLoaded', function() {
 
+  // Quiz button click
+  const quizBtn = document.getElementById('quiz-btn');
+  if (quizBtn) {
+    quizBtn.addEventListener('click', function() {
+      gaEvent('quiz_click', {
+        language: document.documentElement.lang,
+        destination: quizBtn.href
+      });
+    });
+  }
+
   // CTA clicks — hero + case inline
   document.querySelectorAll('.hero-cta, .case-cta').forEach(function(el) {
     el.addEventListener('click', function() {
