@@ -235,17 +235,27 @@
     margin: 24px 0 28px;
   }
 
-  .stat { background: var(--surface); padding: 16px 10px; text-align: center; }
+  .stat {
+    background: var(--surface);
+    padding: 14px 6px;
+    text-align: center;
+    display: flex; flex-direction: column; justify-content: center;
+    min-width: 0;
+  }
 
   .stat-value {
     font-family: 'Unbounded', sans-serif;
-    font-size: 22px; font-weight: 900;
-    color: var(--blue); letter-spacing: -0.04em; line-height: 1;
+    font-size: clamp(13px, 3.6vw, 20px);
+    font-weight: 900;
+    color: var(--blue); letter-spacing: -0.03em; line-height: 1.15;
+    overflow-wrap: break-word;
   }
 
   .stat-label {
-    font-size: 10px; color: var(--muted);
-    margin-top: 5px; line-height: 1.3;
+    font-size: clamp(9px, 2.4vw, 10px);
+    color: var(--muted);
+    margin-top: 6px; line-height: 1.3;
+    overflow-wrap: break-word;
   }
 
   /* FILTERS */
@@ -708,7 +718,9 @@
     .card-top { padding: 24px 24px 20px; }
     .case-body-inner { padding: 24px; }
     .stats-row { gap: 0; }
-    .stat-value { font-size: 26px; }
+    .stat { padding: 18px 12px; }
+    .stat-value { font-size: 22px; letter-spacing: -0.04em; }
+    .stat-label { font-size: 11px; }
     .cta-section { padding: 36px 32px; }
     .cta-buttons { flex-direction: row; }
     .cta-btn { width: auto; flex: 1; }
@@ -753,16 +765,16 @@
 
   <div class="stats-row">
     <div class="stat">
-      <div class="stat-value">3</div>
-      <div class="stat-label" data-i18n="stat_cases">dokončené projekty</div>
+      <div class="stat-value" data-i18n="stat_save_val">až 60&nbsp;000 Kč</div>
+      <div class="stat-label" data-i18n="stat_save">ušetřeno měsíčně</div>
     </div>
     <div class="stat">
-      <div class="stat-value">×72</div>
-      <div class="stat-label" data-i18n="stat_speed">zrychlení procesů</div>
+      <div class="stat-value" data-i18n="stat_fast_val">6 h → 5 min</div>
+      <div class="stat-label" data-i18n="stat_fast">nejrychlejší automatizace</div>
     </div>
     <div class="stat">
-      <div class="stat-value" data-i18n="stat_commission_val">8ч+</div>
-      <div class="stat-label" data-i18n="stat_commission">průměrná úspora měsíčně</div>
+      <div class="stat-value" data-i18n="stat_roi_val">2–3 měsíce</div>
+      <div class="stat-label" data-i18n="stat_roi">ROI</div>
     </div>
   </div>
 
@@ -1126,10 +1138,12 @@ document.addEventListener('DOMContentLoaded', function() {
       eyebrow: 'HoReCa · Стройка · Ритейл',
       h1: 'Ваши конкуренты уже<br>не делают это <em>вручную</em>',
       header_sub: 'Помогаем малому бизнесу убрать ручной труд из операций. Каждый кейс — реальный клиент, реальные цифры.',
-      stat_cases: 'кейса завершено',
-      stat_speed: 'ускорение процессов',
-      stat_commission: 'в среднем сэкономлено в месяц',
-      stat_commission_val: '8ч+',
+      stat_save_val: 'до 60&nbsp;000 Kč',
+      stat_save: 'экономия в месяц',
+      stat_fast_val: '6 ч → 5 мин',
+      stat_fast: 'самая быстрая автоматизация',
+      stat_roi_val: '2–3 месяца',
+      stat_roi: 'ROI',
       filter_all: 'Все', filter_cafe: 'Кафе / HoReCa', filter_hr: 'HR / Зарплаты', filter_ecom: 'E-commerce', filter_ocr: 'Строительство',
       cta_badge: '🎯 Без обязательств',
       cta_title: 'Найдём где вы<br><span>теряете деньги</span><br>прямо сейчас',
@@ -1203,10 +1217,12 @@ document.addEventListener('DOMContentLoaded', function() {
       eyebrow: 'HoReCa · Stavebnictví · Retail',
       h1: 'Vaši konkurenti už<br>to nedělají <em>ručně</em>',
       header_sub: 'Pomáháme malým firmám odstranit manuální práci z operací. Každý případ níže — skutečný klient, skutečná čísla.',
-      stat_cases: 'dokončené projekty',
-      stat_speed: 'zrychlení procesů',
-      stat_commission: 'průměrná úspora h/měsíc',
-      stat_commission_val: '8h+',
+      stat_save_val: 'až 60&nbsp;000 Kč',
+      stat_save: 'ušetřeno měsíčně',
+      stat_fast_val: '6 h → 5 min',
+      stat_fast: 'nejrychlejší automatizace',
+      stat_roi_val: '2–3 měsíce',
+      stat_roi: 'ROI',
       filter_all: 'Vše', filter_cafe: 'Kavárna / HoReCa', filter_hr: 'HR / Mzdy', filter_ecom: 'E-commerce', filter_ocr: 'Stavebnictví',
       cta_badge: '🎯 Bez závazků',
       cta_title: 'Najdeme kde<br><span>ztrácíte peníze</span><br>právě teď',
@@ -1280,10 +1296,12 @@ document.addEventListener('DOMContentLoaded', function() {
       eyebrow: 'HoReCa · Construction · Retail',
       h1: 'Your competitors<br>already stopped <em>doing this manually</em>',
       header_sub: 'We help small businesses eliminate manual work from their operations. Every case below is a real client, real numbers.',
-      stat_cases: 'completed cases',
-      stat_speed: 'process speedup',
-      stat_commission: 'avg. h saved/month',
-      stat_commission_val: '8h+',
+      stat_save_val: 'up to 60&nbsp;000 Kč',
+      stat_save: 'saved per month',
+      stat_fast_val: '6 h → 5 min',
+      stat_fast: 'fastest automation',
+      stat_roi_val: '2–3 months',
+      stat_roi: 'ROI',
       filter_all: 'All', filter_cafe: 'Café / HoReCa', filter_hr: 'HR / Payroll', filter_ecom: 'E-commerce', filter_ocr: 'Construction',
       cta_badge: '🎯 No commitment',
       cta_title: 'Find out where<br><span>you lose money</span><br>on manual work',
