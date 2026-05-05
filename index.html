@@ -788,6 +788,162 @@
 
   <div class="cases-list" id="cases-list">
 
+    <div class="case-card" data-tags="ocr finance">
+      <div class="card-top">
+        <div class="card-head">
+          <div class="tags">
+            <span class="tag primary" data-i18n="tag_construction">Stavebnictví</span>
+            <span class="tag">OCR / AI</span>
+            <span class="tag">Cashflow</span>
+          </div>
+          <div class="toggle-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </div>
+        <div class="card-title" data-i18n="c3_title">Klunn Group: OCR skenování účtenek a faktur → automatický cashflow</div>
+        <div class="card-problem" data-i18n="c3_prob">100 účtenek týdně se sbíralo do složky a předávalo účetnímu ručně. Část se ztratila. Odsouhlasení s bankou trvalo 2 hodiny — a bylo nepřesné.</div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric">
+          <div class="metric-value">400</div>
+          <div class="metric-label" data-i18n="c3_m1">dokladů/měs zpracováno automaticky</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">0</div>
+          <div class="metric-label" data-i18n="c3_m2">ztracených dokumentů</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-body-inner">
+          <div>
+            <div class="section-label" data-i18n="label_done">Co bylo uděláno</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-text" data-i18n="c3_s1"><strong>Sběr přes telefon</strong> — stavbyvedoucí vyfotí účtenku nebo fakturu a pošle do Telegram botu. Žádné složky ani fyzické nosiče</div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-text" data-i18n="c3_s2"><strong>OCR + AI analýza</strong> — OpenAI Vision rozpozná částku, datum, dodavatele a kategorii výdaje. Python skript validuje a normalizuje data</div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-text" data-i18n="c3_s3"><strong>Automatický zápis do cashflow</strong> — Make předá strukturovaná data do tabulky. Výdaj se zobrazí v cashflow okamžitě, bez účetního</div>
+              </div>
+              <div class="step">
+                <div class="step-num">04</div>
+                <div class="step-text" data-i18n="c3_s4"><strong>Odsouhlasení s bankou</strong> — tabulka obsahuje všechny výdaje s daty a částkami, odsouhlasení trvá minuty místo 2 hodin</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-block">
+            <div class="result-icon">🎯</div>
+            <div class="result-text" data-i18n="c3_res">Účetní dostává <strong>hotový cashflow v reálném čase</strong> — bez složek, bez ztrát, bez ručního zadávání. 400 dokumentů měsíčně zpracováno automaticky.</div>
+          </div>
+          <div class="insight">
+            <p data-i18n="c3_ins"><strong>Insight:</strong> ztráta 5% účtenek ze 400 jsou slepá místa ve financích za desítky tisíc korun. Automatizace zcela eliminuje lidský faktor.</p>
+          </div>
+          <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="case-cta">
+            <div>
+              <div class="case-cta-text" data-i18n="case_cta_text">Máte podobnou situaci?</div>
+              <div class="case-cta-sub" data-i18n="case_cta_sub">Získejte bezplatný audit procesů</div>
+            </div>
+            <div class="case-cta-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
+          <div>
+            <div class="section-label" data-i18n="label_stack">Stack</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">🔧</div>
+                <div class="step-text" data-i18n="c3_stack"><strong>Make</strong> (orchestrace) · <strong>OpenAI Vision</strong> (OCR + analýza) · <strong>Python</strong> (validace dat) · <strong>Telegram Bot</strong> (sběr fotek) · <strong>Google Sheets</strong> (cashflow)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card" data-tags="cafe hr">
+      <div class="card-top">
+        <div class="card-head">
+          <div class="tags">
+            <span class="tag primary" data-i18n="tag_cafe">Kavárna</span>
+            <span class="tag" data-i18n="tag_city1">Praha, 2026</span>
+            <span class="tag" data-i18n="tag_hr">HR / Mzdy</span>
+            <span class="tag" data-i18n="tag_evotor">Evotor</span>
+          </div>
+          <div class="toggle-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </div>
+        <div class="card-title" data-i18n="c2_title">Výpočet mzdy z Evotoru — 6 hodin manuální práce → 5 minut</div>
+        <div class="card-problem" data-i18n="c2_prob">Flexibilní směny + procento z tržby = manuální přepočet každý měsíc. Hodiny ztraceného času a neustálé riziko chyb.</div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric">
+          <div class="metric-value">×72</div>
+          <div class="metric-label" data-i18n="c2_m1">rychlejší výpočet</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">0</div>
+          <div class="metric-label" data-i18n="c2_m2">chyb ve výpočtech</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-body-inner">
+          <div>
+            <div class="section-label" data-i18n="label_done">Co bylo uděláno</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-text" data-i18n="c2_s1"><strong>Rozšíření pro Evotor</strong> — čte data o směnách a tržbách každého zaměstnance v reálném čase</div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-text" data-i18n="c2_s2"><strong>Automatický výpočet</strong> — hodinová sazba + % z osobní tržby za směnu, vzorec se flexibilně nastavuje</div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-text" data-i18n="c2_s3"><strong>Export do tabulky</strong> — souhrnná data za libovolné období, historie podle zaměstnance, řezy podle data</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-block">
+            <div class="result-icon">🎯</div>
+            <div class="result-text" data-i18n="c2_res">Výpočet mzdy trvá <strong>5 minut místo 6 hodin</strong>. Data jsou aktuální kdykoliv — není třeba čekat na konec měsíce.</div>
+          </div>
+          <div class="insight">
+            <p data-i18n="c2_ins"><strong>Insight:</strong> 6 hodin účetního jsou ~3 000 CZK přímých nákladů plus riziko chyb vedoucích ke konfliktům se zaměstnanci. Vrátí se za první měsíc.</p>
+          </div>
+          <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="case-cta">
+            <div>
+              <div class="case-cta-text" data-i18n="case_cta_text">Máte podobnou situaci?</div>
+              <div class="case-cta-sub" data-i18n="case_cta_sub">Získejte bezplatný audit procesů</div>
+            </div>
+            <div class="case-cta-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
+          <div>
+            <div class="section-label" data-i18n="label_look">Jak to vypadá</div>
+            <div class="screenshots">
+              <div class="screenshot-item">
+                <img src="images/sc_calc.png" loading="lazy" alt="Калькулятор зарплаты">
+                <div class="screenshot-caption" data-i18n="sc_calc">Kalkulačka mzdy v Evotoru</div>
+              </div>
+              <div class="screenshot-item" style="width:200px">
+                <img src="images/sc_summary.png" loading="lazy" alt="Сводная таблица" style="height:200px;object-fit:cover;object-position:top">
+                <div class="screenshot-caption" data-i18n="sc_summary">Přehled zaměstnanců</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="case-card" data-tags="cafe">
       <div class="card-top">
         <div class="card-head">
@@ -884,162 +1040,6 @@
               <div class="screenshot-item">
                 <img src="images/sc_admin.png" loading="lazy" alt="Админ-панель">
                 <div class="screenshot-caption" data-i18n="sc_admin">Admin panel</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="case-card" data-tags="cafe hr">
-      <div class="card-top">
-        <div class="card-head">
-          <div class="tags">
-            <span class="tag primary" data-i18n="tag_cafe">Kavárna</span>
-            <span class="tag" data-i18n="tag_city1">Praha, 2026</span>
-            <span class="tag" data-i18n="tag_hr">HR / Mzdy</span>
-            <span class="tag" data-i18n="tag_evotor">Evotor</span>
-          </div>
-          <div class="toggle-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-        </div>
-        <div class="card-title" data-i18n="c2_title">Výpočet mzdy z Evotoru — 6 hodin manuální práce → 5 minut</div>
-        <div class="card-problem" data-i18n="c2_prob">Flexibilní směny + procento z tržby = manuální přepočet každý měsíc. Hodiny ztraceného času a neustálé riziko chyb.</div>
-      </div>
-      <div class="card-metrics">
-        <div class="metric">
-          <div class="metric-value">×72</div>
-          <div class="metric-label" data-i18n="c2_m1">rychlejší výpočet</div>
-        </div>
-        <div class="metric">
-          <div class="metric-value">0</div>
-          <div class="metric-label" data-i18n="c2_m2">chyb ve výpočtech</div>
-        </div>
-      </div>
-      <div class="case-body">
-        <div class="case-body-inner">
-          <div>
-            <div class="section-label" data-i18n="label_done">Co bylo uděláno</div>
-            <div class="steps">
-              <div class="step">
-                <div class="step-num">01</div>
-                <div class="step-text" data-i18n="c2_s1"><strong>Rozšíření pro Evotor</strong> — čte data o směnách a tržbách každého zaměstnance v reálném čase</div>
-              </div>
-              <div class="step">
-                <div class="step-num">02</div>
-                <div class="step-text" data-i18n="c2_s2"><strong>Automatický výpočet</strong> — hodinová sazba + % z osobní tržby za směnu, vzorec se flexibilně nastavuje</div>
-              </div>
-              <div class="step">
-                <div class="step-num">03</div>
-                <div class="step-text" data-i18n="c2_s3"><strong>Export do tabulky</strong> — souhrnná data za libovolné období, historie podle zaměstnance, řezy podle data</div>
-              </div>
-            </div>
-          </div>
-          <div class="result-block">
-            <div class="result-icon">🎯</div>
-            <div class="result-text" data-i18n="c2_res">Výpočet mzdy trvá <strong>5 minut místo 6 hodin</strong>. Data jsou aktuální kdykoliv — není třeba čekat na konec měsíce.</div>
-          </div>
-          <div class="insight">
-            <p data-i18n="c2_ins"><strong>Insight:</strong> 6 hodin účetního jsou ~3 000 CZK přímých nákladů plus riziko chyb vedoucích ke konfliktům se zaměstnanci. Vrátí se za první měsíc.</p>
-          </div>
-          <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="case-cta">
-            <div>
-              <div class="case-cta-text" data-i18n="case_cta_text">Máte podobnou situaci?</div>
-              <div class="case-cta-sub" data-i18n="case_cta_sub">Získejte bezplatný audit procesů</div>
-            </div>
-            <div class="case-cta-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </div>
-          </a>
-          <div>
-            <div class="section-label" data-i18n="label_look">Jak to vypadá</div>
-            <div class="screenshots">
-              <div class="screenshot-item">
-                <img src="images/sc_calc.png" loading="lazy" alt="Калькулятор зарплаты">
-                <div class="screenshot-caption" data-i18n="sc_calc">Kalkulačka mzdy v Evotoru</div>
-              </div>
-              <div class="screenshot-item" style="width:200px">
-                <img src="images/sc_summary.png" loading="lazy" alt="Сводная таблица" style="height:200px;object-fit:cover;object-position:top">
-                <div class="screenshot-caption" data-i18n="sc_summary">Přehled zaměstnanců</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="case-card" data-tags="ocr finance">
-      <div class="card-top">
-        <div class="card-head">
-          <div class="tags">
-            <span class="tag primary" data-i18n="tag_construction">Stavebnictví</span>
-            <span class="tag">OCR / AI</span>
-            <span class="tag">Cashflow</span>
-          </div>
-          <div class="toggle-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-        </div>
-        <div class="card-title" data-i18n="c3_title">Klunn Group: OCR skenování účtenek a faktur → automatický cashflow</div>
-        <div class="card-problem" data-i18n="c3_prob">100 účtenek týdně se sbíralo do složky a předávalo účetnímu ručně. Část se ztratila. Odsouhlasení s bankou trvalo 2 hodiny — a bylo nepřesné.</div>
-      </div>
-      <div class="card-metrics">
-        <div class="metric">
-          <div class="metric-value">400</div>
-          <div class="metric-label" data-i18n="c3_m1">dokladů/měs zpracováno automaticky</div>
-        </div>
-        <div class="metric">
-          <div class="metric-value">0</div>
-          <div class="metric-label" data-i18n="c3_m2">ztracených dokumentů</div>
-        </div>
-      </div>
-      <div class="case-body">
-        <div class="case-body-inner">
-          <div>
-            <div class="section-label" data-i18n="label_done">Co bylo uděláno</div>
-            <div class="steps">
-              <div class="step">
-                <div class="step-num">01</div>
-                <div class="step-text" data-i18n="c3_s1"><strong>Sběr přes telefon</strong> — stavbyvedoucí vyfotí účtenku nebo fakturu a pošle do Telegram botu. Žádné složky ani fyzické nosiče</div>
-              </div>
-              <div class="step">
-                <div class="step-num">02</div>
-                <div class="step-text" data-i18n="c3_s2"><strong>OCR + AI analýza</strong> — OpenAI Vision rozpozná částku, datum, dodavatele a kategorii výdaje. Python skript validuje a normalizuje data</div>
-              </div>
-              <div class="step">
-                <div class="step-num">03</div>
-                <div class="step-text" data-i18n="c3_s3"><strong>Automatický zápis do cashflow</strong> — Make předá strukturovaná data do tabulky. Výdaj se zobrazí v cashflow okamžitě, bez účetního</div>
-              </div>
-              <div class="step">
-                <div class="step-num">04</div>
-                <div class="step-text" data-i18n="c3_s4"><strong>Odsouhlasení s bankou</strong> — tabulka obsahuje všechny výdaje s daty a částkami, odsouhlasení trvá minuty místo 2 hodin</div>
-              </div>
-            </div>
-          </div>
-          <div class="result-block">
-            <div class="result-icon">🎯</div>
-            <div class="result-text" data-i18n="c3_res">Účetní dostává <strong>hotový cashflow v reálném čase</strong> — bez složek, bez ztrát, bez ručního zadávání. 400 dokumentů měsíčně zpracováno automaticky.</div>
-          </div>
-          <div class="insight">
-            <p data-i18n="c3_ins"><strong>Insight:</strong> ztráta 5% účtenek ze 400 jsou slepá místa ve financích za desítky tisíc korun. Automatizace zcela eliminuje lidský faktor.</p>
-          </div>
-          <a href="https://t.me/aidar_nasretdinov" target="_blank" rel="noopener noreferrer" class="case-cta">
-            <div>
-              <div class="case-cta-text" data-i18n="case_cta_text">Máte podobnou situaci?</div>
-              <div class="case-cta-sub" data-i18n="case_cta_sub">Získejte bezplatný audit procesů</div>
-            </div>
-            <div class="case-cta-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </div>
-          </a>
-          <div>
-            <div class="section-label" data-i18n="label_stack">Stack</div>
-            <div class="steps">
-              <div class="step">
-                <div class="step-num">🔧</div>
-                <div class="step-text" data-i18n="c3_stack"><strong>Make</strong> (orchestrace) · <strong>OpenAI Vision</strong> (OCR + analýza) · <strong>Python</strong> (validace dat) · <strong>Telegram Bot</strong> (sběr fotek) · <strong>Google Sheets</strong> (cashflow)</div>
               </div>
             </div>
           </div>
