@@ -180,6 +180,17 @@ h1 span { color: #4c6fff; }
 }
 .pain-dot.red { background: #e03a3a; }
 
+/* CLIENTS */
+.clients-block { margin-bottom: 20px; }
+.clients-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4c6fff;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* TIMING NOTE */
 .timing-note {
   font-size: 13px; color: #2da84e; font-weight: 600;
@@ -355,6 +366,10 @@ h1 span { color: #4c6fff; }
     <div class="result-headline" id="resultHeadline"></div>
     <div class="result-text" id="resultText"></div>
     <div class="top-pains" id="topPains"></div>
+    <div class="clients-block">
+      <div class="clients-title" id="clientsTitle">С кем мы работаем</div>
+      <div data-clients></div>
+    </div>
     <a class="audit-btn call-btn" href="tel:+420776627409" id="callBtnEl">
       📞 Позвонить — обсудить аудит
     </a>
@@ -449,6 +464,7 @@ const translations = {
     auditBtn: "Získat audit zdarma",
     auditNote: "Napište mi na Telegram — rozebereme vaše podnikání zdarma",
     timingNote: "⏱ Obvykle se ozvu do 2–3 hodin v pracovní době",
+    clientsTitle: "S kým pracujeme",
     callBtn: "📞 Zavolat — probrat audit",
     tgBtn: "✈️ Napsat na Telegram",
     topPainsTitle: "Vaše hlavní oblasti ztrát:",
@@ -550,6 +566,7 @@ const translations = {
     auditBtn: "Get a free process audit",
     auditNote: "Message me on Telegram — we'll analyze your business for free",
     timingNote: "⏱ I usually respond within 2–3 hours during business hours",
+    clientsTitle: "Who we work with",
     callBtn: "📞 Call — discuss the audit",
     tgBtn: "✈️ Message on Telegram",
     topPainsTitle: "Your main loss areas:",
@@ -651,6 +668,7 @@ const translations = {
     auditBtn: "Получить бесплатный аудит процессов",
     auditNote: "Напишите мне в Telegram — разберём ваш бизнес бесплатно",
     timingNote: "⏱ Обычно связываюсь в течение 2–3 часов в рабочее время",
+    clientsTitle: "С кем мы работаем",
     callBtn: "📞 Позвонить — обсудить аудит",
     tgBtn: "✈️ Написать в Telegram",
     topPainsTitle: "Ваши главные точки потерь:",
@@ -707,6 +725,7 @@ function applyTranslations() {
   document.getElementById('callBtnEl').textContent = t.callBtn;
   document.getElementById('auditNoteEl').textContent = t.auditNote;
   document.getElementById('timingNote').textContent = t.timingNote;
+  document.getElementById('clientsTitle').textContent = t.clientsTitle;
   document.getElementById('formHeading').textContent = t.form.heading;
   document.getElementById('formSub').textContent = t.form.sub;
   document.getElementById('fname').placeholder = t.form.namePlaceholder;
@@ -864,5 +883,6 @@ function showResult(sum, name) {
   res.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 </script>
+<script src="../clients/clients.js" defer></script>
 </body>
 </html>
