@@ -630,9 +630,10 @@
       align-items: start;
       padding: 120px 0 160px;
     }
-    .cases-side { grid-column: 1 / 6; align-self: stretch; }
+    /* heading and filters stay pinned together while the list scrolls */
+    .cases-side { grid-column: 1 / 6; position: sticky; top: 40px; }
     .cases-title { display: block; margin-bottom: 28px; }
-    .filters { gap: 10px; margin: 0; max-width: 26em; position: sticky; top: 40px; }
+    .filters { gap: 10px; margin: 0; max-width: 26em; }
     .filter-btn { font-size: 14px; padding: 9px 16px; }
     .cases-list { grid-column: 6 / 13; gap: 16px; }
 
