@@ -115,10 +115,12 @@
     var viewport = document.createElement('div');
     viewport.className = 'lu-clients-viewport';
     viewport.tabIndex = 0;
-    // focusable scroller: name it after the heading next to it («S kým pracujeme» on the site and in the quiz)
+    // focusable scroller: on the site it is a region named by «S kým pracujeme»; the quiz shows no heading
     var heading = host.parentElement && host.parentElement.querySelector('[id]');
-    viewport.setAttribute('role', 'region');
-    if (heading) viewport.setAttribute('aria-labelledby', heading.id);
+    if (heading) {
+      viewport.setAttribute('role', 'region');
+      viewport.setAttribute('aria-labelledby', heading.id);
+    }
     var list = document.createElement('ul');
     list.className = 'lu-clients-list';
     // три копии: [копия][оригинал][копия] — листаем по кругу, незаметно перескакивая в середину

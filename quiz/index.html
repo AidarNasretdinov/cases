@@ -182,14 +182,6 @@ h1 span { color: #4c6fff; }
 
 /* CLIENTS */
 .clients-block { margin-bottom: 20px; }
-.clients-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: #4c6fff;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 
 /* TIMING NOTE */
 .timing-note {
@@ -346,6 +338,7 @@ h1 span { color: #4c6fff; }
     <p id="formSub">Оставьте контакт — я пришлю разбор вашей ситуации и покажу, где именно теряются деньги</p>
     <input id="fname" placeholder="Ваше имя" autocomplete="name" required minlength="2">
     <input id="fphone" placeholder="+420 123 456 789" type="tel" autocomplete="tel" required>
+    <input id="femail" placeholder="Ваш email" type="email" inputmode="email" autocomplete="email" required>
     <select id="findustry">
       <option value="" disabled selected id="industryPlaceholder">Сфера бизнеса</option>
       <option value="horeca" id="ind_horeca">🍽️ HoReCa (кафе, ресторан, отель)</option>
@@ -367,7 +360,6 @@ h1 span { color: #4c6fff; }
     <div class="result-text" id="resultText"></div>
     <div class="top-pains" id="topPains"></div>
     <div class="clients-block">
-      <div class="clients-title" id="clientsTitle">С кем мы работаем</div>
       <div data-clients></div>
     </div>
     <a class="audit-btn call-btn" href="tel:+420776627409" id="callBtnEl">
@@ -448,8 +440,10 @@ const translations = {
       sub: "Zanechte kontakt — pošlu vám rozbor vaší situace a ukážu, kde přesně ztrácíte peníze",
       namePlaceholder: "Vaše jméno",
       phonePlaceholder: "+420 123 456 789",
+      emailPlaceholder: "Váš e-mail",
       nameError: "Zadejte své jméno",
       phoneError: "Zadejte správné telefonní číslo",
+      emailError: "Zadejte správný e-mail",
       industryError: "Vyberte prosím oblast podnikání",
       submitBtn: "Získat výsledek →",
       submitting: "Odesíláme...",
@@ -464,7 +458,6 @@ const translations = {
     auditBtn: "Získat audit zdarma",
     auditNote: "Napište mi na Telegram — rozebereme vaše podnikání zdarma",
     timingNote: "⏱ Obvykle se ozvu do 2–3 hodin v pracovní době",
-    clientsTitle: "S kým pracujeme",
     callBtn: "📞 Zavolat — probrat audit",
     tgBtn: "✈️ Napsat na Telegram",
     topPainsTitle: "Vaše hlavní oblasti ztrát:",
@@ -550,8 +543,10 @@ const translations = {
       sub: "Leave your contact — I'll send you a breakdown of your situation and show where exactly you're losing money",
       namePlaceholder: "Your name",
       phonePlaceholder: "+420 123 456 789",
+      emailPlaceholder: "Your email",
       nameError: "Please enter your name",
       phoneError: "Please enter a valid phone number",
+      emailError: "Please enter a valid email",
       industryError: "Please select your industry",
       submitBtn: "Get result →",
       submitting: "Sending...",
@@ -566,7 +561,6 @@ const translations = {
     auditBtn: "Get a free process audit",
     auditNote: "Message me on Telegram — we'll analyze your business for free",
     timingNote: "⏱ I usually respond within 2–3 hours during business hours",
-    clientsTitle: "Who we work with",
     callBtn: "📞 Call — discuss the audit",
     tgBtn: "✈️ Message on Telegram",
     topPainsTitle: "Your main loss areas:",
@@ -652,8 +646,10 @@ const translations = {
       sub: "Оставьте контакт — я пришлю разбор вашей ситуации и покажу, где именно теряются деньги",
       namePlaceholder: "Ваше имя",
       phonePlaceholder: "+420 123 456 789",
+      emailPlaceholder: "Ваш email",
       nameError: "Введите ваше имя",
       phoneError: "Введите корректный номер телефона",
+      emailError: "Введите корректный email",
       industryError: "Пожалуйста, выберите сферу бизнеса",
       submitBtn: "Получить результат →",
       submitting: "Отправляем...",
@@ -668,7 +664,6 @@ const translations = {
     auditBtn: "Получить бесплатный аудит процессов",
     auditNote: "Напишите мне в Telegram — разберём ваш бизнес бесплатно",
     timingNote: "⏱ Обычно связываюсь в течение 2–3 часов в рабочее время",
-    clientsTitle: "С кем мы работаем",
     callBtn: "📞 Позвонить — обсудить аудит",
     tgBtn: "✈️ Написать в Telegram",
     topPainsTitle: "Ваши главные точки потерь:",
@@ -700,7 +695,7 @@ function detectLang() {
   if (param && translations[param]) return param;
   const browser = navigator.language.slice(0, 2).toLowerCase();
   if (translations[browser]) return browser;
-  return 'cs';
+  return 'en';
 }
 
 const lang = detectLang();
@@ -725,11 +720,11 @@ function applyTranslations() {
   document.getElementById('callBtnEl').textContent = t.callBtn;
   document.getElementById('auditNoteEl').textContent = t.auditNote;
   document.getElementById('timingNote').textContent = t.timingNote;
-  document.getElementById('clientsTitle').textContent = t.clientsTitle;
   document.getElementById('formHeading').textContent = t.form.heading;
   document.getElementById('formSub').textContent = t.form.sub;
   document.getElementById('fname').placeholder = t.form.namePlaceholder;
   document.getElementById('fphone').placeholder = t.form.phonePlaceholder;
+  document.getElementById('femail').placeholder = t.form.emailPlaceholder;
   document.getElementById('submitBtn').textContent = t.form.submitBtn;
   document.querySelector('.privacy').textContent = t.form.privacy;
 
@@ -805,14 +800,16 @@ function submitForm() {
   if (formSubmitted) return;
   const name = document.getElementById("fname").value.trim();
   const phone = document.getElementById("fphone").value.replace(/\D/g, "");
+  const email = document.getElementById("femail").value.trim();
   const industry = document.getElementById("findustry").value; // Fix: empty string = falsy, validates correctly
   const errEl = document.getElementById("ferror");
 
   // Clear previous error highlights
-  ['fname','fphone','findustry'].forEach(id => document.getElementById(id).classList.remove('error-field'));
+  ['fname','fphone','femail','findustry'].forEach(id => document.getElementById(id).classList.remove('error-field'));
 
   if (name.length < 2) { errEl.innerText = t.form.nameError; document.getElementById('fname').classList.add('error-field'); return; }
   if (phone.length < 9) { errEl.innerText = t.form.phoneError; document.getElementById('fphone').classList.add('error-field'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { errEl.innerText = t.form.emailError; document.getElementById('femail').classList.add('error-field'); return; }
   if (!industry) { errEl.innerText = t.form.industryError; document.getElementById('findustry').classList.add('error-field'); return; }
   errEl.innerText = "";
 
@@ -830,7 +827,7 @@ function submitForm() {
       type: "quiz_completed",
       lang: lang,
       lead_id: "lead_" + Date.now(),
-      name, phone, industry, score: sum, score_max: 16,
+      name, phone, email, industry, score: sum, score_max: 16,
       answers,
       categories: t.cards.map((c, i) => ({ category: c.title, score: answers[i] }))
     })
